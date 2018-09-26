@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="677.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="C" layoutX="104.0" layoutY="241.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="C" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="416.0" layoutY="241.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="➗" />
+      <TextField alignment="BOTTOM_RIGHT" prefHeight="242.0" prefWidth="520.0" style="-fx-background-color: #444; -fx-text-fill: #fff; -fx-border-color: #696969; -fx-border-style: solid; -fx-border-width: 1px;" text="sadsadasdsad">
+         <font>
+            <Font name="Consolas" size="36.0" />
+         </font>
+      </TextField>
+      <Button fx:id="C1" layoutX="208.0" layoutY="241.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="+/-" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C2" layoutX="312.0" layoutY="241.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="←✘" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C3" layoutX="104.0" layoutY="332.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="7" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C31" layoutX="208.0" layoutY="332.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="8" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C32" layoutX="312.0" layoutY="332.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="9" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C321" layoutX="312.0" layoutY="423.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="6" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C311" layoutX="208.0" layoutY="423.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C33" layoutX="104.0" layoutY="423.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="4" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C322" layoutX="312.0" layoutY="514.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="3" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C312" layoutX="208.0" layoutY="514.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="2" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C34" layoutX="104.0" layoutY="514.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="1" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="416.0" layoutY="332.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="✖" />
+      <Button layoutX="416.0" layoutY="423.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="➖" />
+      <Button layoutX="416.0" layoutY="605.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="=">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Button>
+      <Button layoutX="416.0" layoutY="514.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="➕" />
+      <Button fx:id="C341" layoutX="208.0" layoutY="605.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="0" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C3221" layoutX="312.0" layoutY="605.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="." textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C3411" layoutX="104.0" layoutY="605.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text=")" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C34111" layoutY="605.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="(" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C4" layoutY="241.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="CE" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="C341111" layoutY="514.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="n!" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
