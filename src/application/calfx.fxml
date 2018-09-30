@@ -42,7 +42,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="C341111" layoutX="7.0" layoutY="429.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="n!" textFill="WHITE">
+      <Button fx:id="C341111" layoutX="7.0" layoutY="429.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="√x" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
@@ -108,7 +108,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="C11" layoutX="7.0" layoutY="338.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="log" textFill="WHITE">
+      <Button fx:id="C11" layoutX="7.0" layoutY="338.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="n!" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>

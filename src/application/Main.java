@@ -22,7 +22,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		calculator c = new calculator();
-		System.out.println(c.evaluateExp("1+1"));
+		System.out.println(c.evaluateExp("-2.55555555555+-3* (4-3/5)--7"));
 		launch(args);	
 	}
 }
