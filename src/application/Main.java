@@ -14,7 +14,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
-			primaryStage.show();
+			//primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -22,7 +22,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		calculator c = new calculator();
-		System.out.println(c.evaluateExp("-2.55555555555+-3* (4-3/5)--7"));
+		System.out.println(c.evaluateExp("-2+-3* 4-3/5)--7"));
 		launch(args);	
 	}
 }
