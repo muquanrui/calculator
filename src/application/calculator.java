@@ -99,8 +99,14 @@ public class calculator implements Initializable {
 		String[] tokens1 = newExpression.split(" ");
 
 		ArrayList<String> tokens = new ArrayList<String>(Arrays.asList(tokens1));
+		
 		Stack<Character> brackets = new Stack<>();
+		Stack<String> orandS = new Stack<>();
+		Stack<String> oratorS = new Stack<>();
+		
+		String newLine=curLine;
 
+		
 		for (int i = 0; i < tokens.size(); i++) {
 			String token = tokens.get(i);
 			if (token.length() == 0) {
@@ -108,8 +114,16 @@ public class calculator implements Initializable {
 				i--;
 			} else if (Pattern.matches(numPattern, token)) {
 				orator.add(token);
+				oratorS.push(token);
+				
+				double d=Double.parseDouble(token);
+								
+				if(d<0) {
+					newLine=newLine.replaceFirst("-", "@");
+				}
+				
 			} else if (Pattern.matches(operandPattern, token)) {
-				orand.add(token);
+				orand.add(token);		
 				if (token.equals("(")) {
 					brackets.push(token.charAt(0));
 				} else if (token.equals(")")) {
@@ -117,24 +131,80 @@ public class calculator implements Initializable {
 						brackets.pop();
 					} catch (Exception e) {
 						confirm = false;
-						System.err.println("错误! 位置：" + curLine.indexOf(token) + " 原因：输入括号未闭合");
+						
+						System.err.println("错误! 位置：" + newLine.indexOf(token) + " 原因：输入括号未闭合");
+						
 						if (orand.indexOf("(") != -1) {
 							orand.remove(orand.lastIndexOf("("));
 						}
 						orand.remove(orand.lastIndexOf(")"));
+						tokens.remove(i);
+						i--;
+					}
+				} else {
+					orandS.push(token);			
+					try {
+						oratorS.pop();
+					} catch(Exception e) {
+						confirm = false;
+						System.err.println("错误! 位置：" + newLine.indexOf(token) + " 原因：操作符使用错误");
+						orand.remove(orand.lastIndexOf(token));
+						tokens.remove(i);
+						i--;
+					
 					}
 				}
+				
+				if(token.charAt(0)!='(') {
+					if(token.charAt(0)!='-') {
+						newLine=newLine.replaceFirst("\\"+token, "@");
+					}
+					else {
+						newLine=newLine.replaceFirst(token, "@");
+					}	
+				}
+				
+				
 			} else {
-				tokens.remove(i);
-				i--;
 				if (tokens.indexOf(token) + 1 < tokens.size()) {
 					tokens.remove(i + 1);
 				}
+				
+				tokens.remove(i);
+				i--;
+				
 				confirm = false;
-				System.err.println("错误! 位置：" + curLine.indexOf(token) + " 原因：输入包含无效字符");
-			}
+				
+				int pos=0;
+				for(int j=0;j<token.length();j++) {
+					char c=token.charAt(j);
+					if(c=='-'||c=='.'||(c>='0' && c<='9')) {
+						continue;
+					}
+					pos=j;
+					break;
+				}			
+				confirm = false;		
+				System.err.println("错误! 位置：" + (newLine.indexOf(token)+pos) + " 原因：输入包含无效字符");
+				
+				char b[] = new char[token.length()];
+			    Arrays.fill(b, 'c');
+			    String re = new String(b);
+				newLine=newLine.replaceFirst(token, re);
+			}		
 		}
-
+		
+		
+		
+		while(!brackets.isEmpty()) {	
+			System.err.println("错误! 位置：" + newLine.indexOf("(") + " 原因：括号未闭合");
+			confirm = false;
+			newLine=newLine.replaceFirst("\\(", "#");
+			orand.remove(orand.lastIndexOf("("));
+			tokens.remove(tokens.lastIndexOf("("));
+			brackets.pop();		
+		}
+		
 		System.out.println("原始表达式：" + curLine);
 		System.out.println("操作数：" + orator);
 		System.out.println("操作符：" + orand);

@@ -19,7 +19,7 @@ public class Main extends Application {
 //			primaryStage.show();
             Parent root = FXMLLoader.load(getClass().getResource("calfx.fxml"));
             primaryStage.setTitle("¼ÆËãÆ÷");
-            primaryStage.setScene(new Scene(root, 508, 686));
+            primaryStage.setScene(new Scene(root, 510, 609));
             primaryStage.setResizable(false);
             primaryStage.show();
 		} catch(Exception e) {
