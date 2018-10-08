@@ -1,142 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="620.0" prefWidth="516.0" style="-fx-border-color: #fff; -fx-border-style: solid; -fx-border-width: 1px; -fx-background-color: #ccc;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.calculator">
+<AnchorPane prefHeight="620.0" prefWidth="516.0" style="-fx-border-color: #fff; -fx-border-style: solid; -fx-border-width: 1px; -fx-background-color: #ccc;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.calculator">
 	<children>
-		<Button fx:id="Clear" layoutX="210.0" layoutY="208.0" mnemonicParsing="false" onAction="#clearAll" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="C" textFill="WHITE">
+		<Button fx:id="Clear" layoutX="208.0" layoutY="206.0" mnemonicParsing="false" onAction="#clearAll" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="C" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Divide" layoutX="418.0" layoutY="208.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="÷">
+		<Button fx:id="Divide" layoutX="416.0" layoutY="206.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="÷">
 			<font>
 				<Font size="30.0" />
 			</font>
 		</Button>
-		<Button fx:id="Negative" layoutX="2.0" layoutY="208.0" mnemonicParsing="false" onAction="#toNegative" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="+/-" textFill="WHITE">
+		<Button fx:id="Negative" layoutY="206.0" mnemonicParsing="false" onAction="#toNegative" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="+/-" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Backspace" layoutX="314.0" layoutY="208.0" mnemonicParsing="false" onAction="#pressBackspace" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="←✘" textFill="WHITE">
+		<Button fx:id="Backspace" layoutX="312.0" layoutY="206.0" mnemonicParsing="false" onAction="#pressBackspace" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="←✘" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num7" layoutX="106.0" layoutY="290.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="7" textFill="WHITE">
+		<Button fx:id="Num7" layoutX="104.0" layoutY="288.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="7" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Multiply" layoutX="418.0" layoutY="290.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="×">
+		<Button fx:id="Multiply" layoutX="416.0" layoutY="288.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="×">
 			<font>
 				<Font size="30.0" />
 			</font>
 		</Button>
-		<Button fx:id="Minus" layoutX="418.0" layoutY="372.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="－">
+		<Button fx:id="Minus" layoutX="416.0" layoutY="370.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="－">
 			<font>
 				<Font size="30.0" />
 			</font>
 		</Button>
-		<Button fx:id="Plus" layoutX="418.0" layoutY="454.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="＋">
+		<Button fx:id="Plus" layoutX="416.0" layoutY="452.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="＋">
 			<font>
 				<Font size="30.0" />
 			</font>
 		</Button>
-		<Button fx:id="ClearError" layoutX="106.0" layoutY="208.0" mnemonicParsing="false" onAction="#clearError" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="CE" textFill="WHITE">
+		<Button fx:id="ClearError" layoutX="104.0" layoutY="206.0" mnemonicParsing="false" onAction="#clearError" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="CE" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Root" layoutX="2.0" layoutY="372.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="√x" textFill="WHITE">
+		<Button fx:id="Root" layoutY="370.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="√x" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num8" layoutX="210.0" layoutY="290.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="8" textFill="WHITE">
+		<Button fx:id="Num8" layoutX="208.0" layoutY="288.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="8" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num9" layoutX="314.0" layoutY="290.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="9" textFill="WHITE">
+		<Button fx:id="Num9" layoutX="312.0" layoutY="288.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="9" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num6" layoutX="314.0" layoutY="372.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="6" textFill="WHITE">
+		<Button fx:id="Num6" layoutX="312.0" layoutY="370.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="6" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num5" layoutX="210.0" layoutY="372.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="5" textFill="WHITE">
+		<Button fx:id="Num5" layoutX="208.0" layoutY="370.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="5" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num4" layoutX="106.0" layoutY="372.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="4" textFill="WHITE">
+		<Button fx:id="Num4" layoutX="104.0" layoutY="370.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="4" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num3" layoutX="314.0" layoutY="454.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="3" textFill="WHITE">
+		<Button fx:id="Num3" layoutX="312.0" layoutY="452.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="3" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num2" layoutX="210.0" layoutY="454.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="2" textFill="WHITE">
+		<Button fx:id="Num2" layoutX="208.0" layoutY="452.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="2" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num1" layoutX="106.0" layoutY="454.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="1" textFill="WHITE">
+		<Button fx:id="Num1" layoutX="104.0" layoutY="452.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="1" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Num0" layoutX="209.0" layoutY="536.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="0" textFill="WHITE">
+		<Button fx:id="Num0" layoutX="208.0" layoutY="534.0" mnemonicParsing="false" onAction="#pressNum" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="0" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Equal" layoutX="417.0" layoutY="536.0" mnemonicParsing="false" onAction="#evaluateExp" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="＝">
+		<Button fx:id="Equal" layoutX="416.0" layoutY="534.0" mnemonicParsing="false" onAction="#evaluateExp" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #F08080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="＝">
 			<font>
 				<Font size="30.0" />
 			</font>
 		</Button>
-		<Button fx:id="BracketRight" layoutX="105.0" layoutY="536.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text=")" textFill="WHITE">
+		<Button fx:id="BracketRight" layoutX="104.0" layoutY="534.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text=")" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="BracketLeft" layoutX="1.0" layoutY="536.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="(" textFill="WHITE">
+		<Button fx:id="BracketLeft" layoutY="534.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="(" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Dot" layoutX="313.0" layoutY="536.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="." textFill="WHITE">
+		<Button fx:id="Dot" layoutX="312.0" layoutY="534.0" mnemonicParsing="false" onAction="#pressOperand" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="." textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Factorial" layoutX="2.0" layoutY="290.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="n!" textFill="WHITE">
+		<Button fx:id="Factorial" layoutY="288.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="n!" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="Square" layoutX="2.0" layoutY="454.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="x²" textFill="WHITE">
+		<Button fx:id="Square" layoutY="452.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="104.0" style="-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;" text="x²" textFill="WHITE">
 			<font>
 				<Font size="24.0" />
 			</font>
 		</Button>
-      <Label fx:id="textResult" alignment="BOTTOM_RIGHT" layoutY="2.0" prefHeight="206.0" prefWidth="521.0" style="-fx-background-color: #444; -fx-border-color: #696969; -fx-border-style: solid; -fx-border-width: 1px; -fx-padding: 10px;" text="-2+-*3* (*-4-3/5--7a" textAlignment="RIGHT" textFill="WHITE">
+      <Label fx:id="textResult" alignment="BOTTOM_RIGHT" prefHeight="206.0" prefWidth="521.0" style="-fx-background-color: #444; -fx-border-color: #696969; -fx-border-style: solid; -fx-border-width: 1px; -fx-padding: 10px;" text="-2+-*3* (*-4-3/5--7a" textAlignment="RIGHT" textFill="WHITE">
          <font>
             <Font name="Consolas" size="36.0" />
          </font>

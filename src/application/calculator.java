@@ -92,6 +92,7 @@ public class calculator implements Initializable {
 	}
 
 	public ArrayList<String> analyzeExp() {
+	    confirm = true;
 	    myTokens.clear();
 	    orand.clear();
 	    orator.clear();
@@ -157,7 +158,7 @@ public class calculator implements Initializable {
 				
 				if(token.charAt(0)!='(') {
 					if(token.charAt(0)!='-') {
-						newLine=newLine.replaceFirst("\\"+token, "@");
+						newLine=newLine.replaceFirst("\\" +token, "@");
 					}
 					else {
 						newLine=newLine.replaceFirst(token, "@");
@@ -275,7 +276,7 @@ public class calculator implements Initializable {
 	        lastNum--;
         }
         StringBuilder cl = new StringBuilder(curLine);
-	    if(lastNum >= 0 && cl.charAt(lastNum) == '-'){
+	    if(lastNum >= 0 && cl.charAt(lastNum) == '-' && !Character.isDigit(cl.charAt(lastNum - 1))){
 	        cl.deleteCharAt(lastNum);
         }else{
             cl.insert(lastNum + 1, '-');
@@ -287,6 +288,7 @@ public class calculator implements Initializable {
 	// 操作数、操作符入栈
 	@FXML
 	public void evaluateExp(ActionEvent event) {
+
 		ArrayList<String> tokens = analyzeExp();
 
 		if (confirm) {
@@ -368,8 +370,8 @@ public class calculator implements Initializable {
 		}
 		else {
             preLines += curLine + "\n";
-            curLine = "Error";
-            textResult.setText(preLines + curLine);
+            curLine = "0";
+            textResult.setText(preLines + "Error");
 		}
 
 	}
