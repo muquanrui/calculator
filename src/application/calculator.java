@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 
 /**
  * 可能出现的错误： 1.输入非法字符 2.括号不闭合 3.连续的操作符 4.
@@ -23,6 +24,9 @@ public class calculator implements Initializable {
 
 	@FXML
 	private Label textResult;
+
+	@FXML
+	private ScrollPane scrollResult;
 
 	private static String numPattern = "^(\\-|\\+)?\\d+(\\.\\d+)?$";
 	private static String operandPattern = "\\(|\\)|\\*|/|\\+|-";
@@ -373,8 +377,12 @@ public class calculator implements Initializable {
             curLine = "0";
             textResult.setText(preLines + "Error");
 		}
-
+		scrollToBottom();
 	}
+
+	public void scrollToBottom(){
+	    scrollResult.setVvalue(1);
+    }
 
 	public void printOutTokens() {
 		if (myTokens.size() == 0) {
