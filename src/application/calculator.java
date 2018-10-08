@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
 /**
- * ¿ÉÄÜ³öÏÖµÄ´íÎó£º 1.ÊäÈë·Ç·¨×Ö·û 2.À¨ºÅ²»±ÕºÏ 3.Á¬ĞøµÄ²Ù×÷·û 4.
+ * å¯èƒ½å‡ºç°çš„é”™è¯¯ï¼š 1.è¾“å…¥éæ³•å­—ç¬¦ 2.æ‹¬å·ä¸é—­åˆ 3.è¿ç»­çš„æ“ä½œç¬¦ 4.
  */
 
 public class calculator implements Initializable {
@@ -29,7 +29,7 @@ public class calculator implements Initializable {
 	private ScrollPane scrollResult;
 
 	private static String numPattern = "^(\\-|\\+)?\\d+(\\.\\d+)?$";
-	private static String operandPattern = "\\(|\\)|\\*|/|\\+|-";
+	private static String operandPattern = "\\(|\\)|\\*|/|\\+|-|!|\\^|âˆš";
 
 	private boolean confirm = true;
 
@@ -41,10 +41,10 @@ public class calculator implements Initializable {
     private static String curLine;
 
 	/**
-	 * ËãÊı±í´ïÊ½¼ÆËã´¦ÀíË¼Â·£º ³ÌĞò´Ó×óµ½ÓÒµÄÉ¨Ãè±í´ïÊ½£¬ÌáÈ¡³ö²Ù×÷Êı£¬²Ù×÷·û£¬ÒÔ¼°À¨ºÅ 1.Èç¹ûÊÇ²Ù×÷Êı£¬Ö±½Ó½«ÆäÑ¹ÈëoperandStackÕ»ÖĞ
-	 * 2.Èç¹ûÊÇ+£¬-ÔËËã·û£¬´¦ÀíoperatorStackÕ»¶¨ÖĞµÄËùÓĞÔËËã·û£¬´¦ÀíÍêÖ®ºó½«ÌáÈ¡³öµÄÔËËã·ûÑ¹ÈëÕ»ÖĞ
-	 * 3.Èç¹ûÊÇ*,/ÔËËã·û£¬´¦ÀíÕ»¶¥µÄËùÓĞ*,/ÔËËã·û£¬Èç¹û´ËÊ±µÄÕ»¶¥µÄÔËËã·ûÊÇ+£¬-ÄÇÃ´Ö±½ÓÈëÕ»£¬´¦ÀíÍêÖ®ºó½«ÌáÈ¡³öµÄÔËËã·ûÈëÕ»
-	 * 4.Èç¹ûÊÇ(,ÄÇÃ´Ö±½ÓÑ¹ÈëoperatorStackÕ»ÖĞ 5.Èç¹ûÊÇ),ÖØ¸´´¦ÀíÀ´×ÔoperatorStackÕ»¶¥µÄÔËËã·û£¬ÖªµÀ¿´µ½Õ»¶¥µÄ(
+	 * ç®—æ•°è¡¨è¾¾å¼è®¡ç®—å¤„ç†æ€è·¯ï¼š ç¨‹åºä»å·¦åˆ°å³çš„æ‰«æè¡¨è¾¾å¼ï¼Œæå–å‡ºæ“ä½œæ•°ï¼Œæ“ä½œç¬¦ï¼Œä»¥åŠæ‹¬å· 1.å¦‚æœæ˜¯æ“ä½œæ•°ï¼Œç›´æ¥å°†å…¶å‹å…¥operandStackæ ˆä¸­
+	 * 2.å¦‚æœæ˜¯+ï¼Œ-è¿ç®—ç¬¦ï¼Œå¤„ç†operatorStackæ ˆå®šä¸­çš„æ‰€æœ‰è¿ç®—ç¬¦ï¼Œå¤„ç†å®Œä¹‹åå°†æå–å‡ºçš„è¿ç®—ç¬¦å‹å…¥æ ˆä¸­
+	 * 3.å¦‚æœæ˜¯*,/è¿ç®—ç¬¦ï¼Œå¤„ç†æ ˆé¡¶çš„æ‰€æœ‰*,/è¿ç®—ç¬¦ï¼Œå¦‚æœæ­¤æ—¶çš„æ ˆé¡¶çš„è¿ç®—ç¬¦æ˜¯+ï¼Œ-é‚£ä¹ˆç›´æ¥å…¥æ ˆï¼Œå¤„ç†å®Œä¹‹åå°†æå–å‡ºçš„è¿ç®—ç¬¦å…¥æ ˆ
+	 * 4.å¦‚æœæ˜¯(,é‚£ä¹ˆç›´æ¥å‹å…¥operatorStackæ ˆä¸­ 5.å¦‚æœæ˜¯),é‡å¤å¤„ç†æ¥è‡ªoperatorStackæ ˆé¡¶çš„è¿ç®—ç¬¦ï¼ŒçŸ¥é“çœ‹åˆ°æ ˆé¡¶çš„(
 	 */
 
 	@Override
@@ -67,12 +67,12 @@ public class calculator implements Initializable {
 
 	}
 
-	// Ê¹ÓÃ¿Õ¸ñ·Ö¸î×Ö·û´®
+	// ä½¿ç”¨ç©ºæ ¼åˆ†å‰²å­—ç¬¦ä¸²
 	public String insetBlanks(String s) {
 		String result = "";
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) == '(' || s.charAt(i) == ')' || s.charAt(i) == '+' || s.charAt(i) == '*'
-					|| s.charAt(i) == '/')
+					|| s.charAt(i) == '/' || s.charAt(i) == '!' || s.charAt(i) == '^' || s.charAt(i) == 'âˆš')
 				result += " " + s.charAt(i) + " ";
 			else if (s.charAt(i) == '-') {
 				int front = i - 1;
@@ -110,7 +110,8 @@ public class calculator implements Initializable {
 		Stack<String> oratorS = new Stack<>();
 		
 		String newLine=curLine;
-
+		
+		System.out.println(tokens);
 		
 		for (int i = 0; i < tokens.size(); i++) {
 			String token = tokens.get(i);
@@ -137,7 +138,7 @@ public class calculator implements Initializable {
 					} catch (Exception e) {
 						confirm = false;
 						
-						System.err.println("´íÎó! Î»ÖÃ£º" + newLine.indexOf(token) + " Ô­Òò£ºÊäÈëÀ¨ºÅÎ´±ÕºÏ");
+						System.err.println("é”™è¯¯! ä½ç½®ï¼š" + newLine.indexOf(token) + " åŸå› ï¼šè¾“å…¥æ‹¬å·æœªé—­åˆ");
 						
 						if (orand.indexOf("(") != -1) {
 							orand.remove(orand.lastIndexOf("("));
@@ -146,13 +147,20 @@ public class calculator implements Initializable {
 						tokens.remove(i);
 						i--;
 					}
-				} else {
+				} else if(token.equals("!")) {
+					
+				} else if(token.equals("^")){
+					
+				} else if(token.equals("âˆš")) {
+					
+				}
+				else {
 					orandS.push(token);			
 					try {
 						oratorS.pop();
 					} catch(Exception e) {
 						confirm = false;
-						System.err.println("´íÎó! Î»ÖÃ£º" + newLine.indexOf(token) + " Ô­Òò£º²Ù×÷·ûÊ¹ÓÃ´íÎó");
+						System.err.println("é”™è¯¯! ä½ç½®ï¼š" + newLine.indexOf(token) + " åŸå› ï¼šæ“ä½œç¬¦ä½¿ç”¨é”™è¯¯");
 						orand.remove(orand.lastIndexOf(token));
 						tokens.remove(i);
 						i--;
@@ -190,7 +198,7 @@ public class calculator implements Initializable {
 					break;
 				}			
 				confirm = false;		
-				System.err.println("´íÎó! Î»ÖÃ£º" + (newLine.indexOf(token)+pos) + " Ô­Òò£ºÊäÈë°üº¬ÎŞĞ§×Ö·û");
+				System.err.println("é”™è¯¯! ä½ç½®ï¼š" + (newLine.indexOf(token)+pos) + " åŸå› ï¼šè¾“å…¥åŒ…å«æ— æ•ˆå­—ç¬¦");
 				
 				char b[] = new char[token.length()];
 			    Arrays.fill(b, 'c');
@@ -202,7 +210,7 @@ public class calculator implements Initializable {
 		
 		
 		while(!brackets.isEmpty()) {	
-			System.err.println("´íÎó! Î»ÖÃ£º" + newLine.indexOf("(") + " Ô­Òò£ºÀ¨ºÅÎ´±ÕºÏ");
+			System.err.println("é”™è¯¯! ä½ç½®ï¼š" + newLine.indexOf("(") + " åŸå› ï¼šæ‹¬å·æœªé—­åˆ");
 			confirm = false;
 			newLine=newLine.replaceFirst("\\(", "#");
 			orand.remove(orand.lastIndexOf("("));
@@ -210,10 +218,10 @@ public class calculator implements Initializable {
 			brackets.pop();		
 		}
 		
-		System.out.println("Ô­Ê¼±í´ïÊ½£º" + curLine);
-		System.out.println("²Ù×÷Êı£º" + orator);
-		System.out.println("²Ù×÷·û£º" + orand);
-		System.out.println("×Ütoken£º" + tokens);
+		System.out.println("åŸå§‹è¡¨è¾¾å¼ï¼š" + curLine);
+		System.out.println("æ“ä½œæ•°ï¼š" + orator);
+		System.out.println("æ“ä½œç¬¦ï¼š" + orand);
+		System.out.println("æ€»tokenï¼š" + tokens);
 
 		return tokens;
 
@@ -235,13 +243,13 @@ public class calculator implements Initializable {
         Object btnNum=event.getSource();
         Button btnCur = (Button) btnNum;
         String operandPress = btnCur.getText();
-        if(operandPress.equals("£«")){
+        if(operandPress.equals("ï¼‹")){
             curLine += "+";
-        }else if(operandPress.equals("£­")){
+        }else if(operandPress.equals("ï¼")){
             curLine += "-";
-        }else if(operandPress.equals("¡Á")){
+        }else if(operandPress.equals("Ã—")){
             curLine += "*";
-        }else if(operandPress.equals("¡Â")){
+        }else if(operandPress.equals("Ã·")){
             curLine += "/";
         }else{
             curLine += operandPress;
@@ -289,7 +297,26 @@ public class calculator implements Initializable {
         textResult.setText(preLines + curLine);
     }
 
-	// ²Ù×÷Êı¡¢²Ù×÷·ûÈëÕ»
+    @FXML
+    public void toFact(ActionEvent event) {
+    	curLine+="!";
+    	textResult.setText(curLine);
+    }
+    
+    @FXML
+    public void toRoot(ActionEvent event) {
+    	curLine+="âˆš";
+    	textResult.setText(curLine);
+    }
+    
+    @FXML
+    public void toSquare(ActionEvent event) {
+    	curLine+="^";
+    	textResult.setText(curLine);
+    }
+    
+    
+	// æ“ä½œæ•°ã€æ“ä½œç¬¦å…¥æ ˆ
 	@FXML
 	public void evaluateExp(ActionEvent event) {
 
@@ -299,45 +326,83 @@ public class calculator implements Initializable {
 			Stack<Double> operandStack = new Stack<>();
 			Stack<Character> operatorStack = new Stack<>();
 
+			int con=0;
+			
 			for (String token : tokens) {
-				if (token.length() == 0) // Èç¹ûÊÇ¿Õ¸ñ¾Í¼ÌĞøÑ­»·
+				
+				if (token.length() == 0) // å¦‚æœæ˜¯ç©ºæ ¼å°±ç»§ç»­å¾ªç¯
 					continue;
-				// µ±Ç°ÔËËã·ûÊÇ¼Ó¼õ,ÎŞÂÛ²Ù×÷·ûÕ»ÊÇÊ²Ã´ÔËËã·û¶¼ÒªÔËËã
+				// å½“å‰è¿ç®—ç¬¦æ˜¯åŠ å‡,æ— è®ºæ“ä½œç¬¦æ ˆæ˜¯ä»€ä¹ˆè¿ç®—ç¬¦éƒ½è¦è¿ç®—
 				else if (token.length() == 1 && (token.charAt(0) == '+' || token.charAt(0) == '-')) {
-					// µ±Õ»²»Îª¿Õ£¬²¢ÇÒÕ»ÖĞ×îÉÏÃæµÄÒ»¸öÔªËØÊÇ¼Ó¼õ³Ë³ıµÄÈÎÒâÒ»¸ö
+					// å½“æ ˆä¸ä¸ºç©ºï¼Œå¹¶ä¸”æ ˆä¸­æœ€ä¸Šé¢çš„ä¸€ä¸ªå…ƒç´ æ˜¯åŠ å‡ä¹˜é™¤çš„ä»»æ„ä¸€ä¸ª
 					while (!operatorStack.isEmpty() && (operatorStack.peek() == '-' || operatorStack.peek() == '+'
 							|| operatorStack.peek() == '/' || operatorStack.peek() == '*')) {
-						processAnOperator(operandStack, operatorStack); // ¿ªÊ¼ÔËËã
+						processAnOperator(operandStack, operatorStack); // å¼€å§‹è¿ç®—
 					}
-					operatorStack.push(token.charAt(0)); // µ±Ç°ÔËËã·ûÈëÕ»
+					operatorStack.push(token.charAt(0)); // å½“å‰è¿ç®—ç¬¦å…¥æ ˆ
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 				}
-				// µ±Ç°ÔËËã·ûÊÇ³Ë³ı£¬ÅĞ¶Ï×îÉÏÃæµÄÊÇ·ñÊÇ³Ë³ı£¬Èç¹ûÊÇ³Ë³ı¾ÍÔËËã£¬²»ÊÇ¾ÍÖ±½ÓÈëÕ»
+				// å½“å‰è¿ç®—ç¬¦æ˜¯ä¹˜é™¤ï¼Œåˆ¤æ–­æœ€ä¸Šé¢çš„æ˜¯å¦æ˜¯ä¹˜é™¤ï¼Œå¦‚æœæ˜¯ä¹˜é™¤å°±è¿ç®—ï¼Œä¸æ˜¯å°±ç›´æ¥å…¥æ ˆ
 				else if (token.charAt(0) == '*' || token.charAt(0) == '/') {
 					while (!operatorStack.isEmpty() && (operatorStack.peek() == '/' || operatorStack.peek() == '*')) {
 						processAnOperator(operandStack, operatorStack);
 					}
-					operatorStack.push(token.charAt(0)); // µ±Ç°ÔËËã·ûÈëÕ»
+					operatorStack.push(token.charAt(0)); // å½“å‰è¿ç®—ç¬¦å…¥æ ˆ
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 				}
-				// µ±Ç°ÔËËã·ûÊÇ×óÀ¨ºÅ£¬Ö±½ÓÈëÕ»
+				else if(token.charAt(0) == '!') {
+					double cur=operandStack.pop();
+					double now=1;
+					for(int i=1;i<=cur;i++) {
+						now*=i;
+						System.out.println(now);
+					}	
+					operandStack.push(now);
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+				}
+				else if(token.charAt(0) == '^') {
+					double cur=operandStack.pop();
+					
+					if(con==1&&cur<0) {
+						operandStack.push(-(cur*cur));
+					}
+					else {
+						operandStack.push(cur*cur);
+					}
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+					
+				}
+				else if(token.charAt(0) == 'âˆš') {
+					double cur=operandStack.pop();
+					if(con==1&&cur<0) {
+						operandStack.push(-Math.sqrt(-cur));
+					}
+					else {
+						operandStack.push(Math.sqrt(cur));
+					}	
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+				}
+				// å½“å‰è¿ç®—ç¬¦æ˜¯å·¦æ‹¬å·ï¼Œç›´æ¥å…¥æ ˆ
 				else if (token.trim().charAt(0) == '(') {
 					operatorStack.push('(');
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 				}
-				// µ±Ç°ÔËËã·ûÊÇÓÒÀ¨ºÅµÄ£¬Çå³ıÕ»ÖĞµÄÔËËã·ûÖ±ÖÁ×óÀ¨ºÅ
+				// å½“å‰è¿ç®—ç¬¦æ˜¯å³æ‹¬å·çš„ï¼Œæ¸…é™¤æ ˆä¸­çš„è¿ç®—ç¬¦ç›´è‡³å·¦æ‹¬å·
 				else if (token.trim().charAt(0) == ')') {
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 					while (operatorStack.peek() != '(') {
-						processAnOperator(operandStack, operatorStack);// ¿ªÊ¼ÔËËã
+						processAnOperator(operandStack, operatorStack);// å¼€å§‹è¿ç®—
 					}
-					operatorStack.pop();// Çå³ı×óÀ¨ºÅ
+					operatorStack.pop();// æ¸…é™¤å·¦æ‹¬å·
 				}
-				// µ±Ç°ÊÇÊı×ÖµÄ»°£¬Ö±½ÓÈëÊı¾İÕ»
+				// å½“å‰æ˜¯æ•°å­—çš„è¯ï¼Œç›´æ¥å…¥æ•°æ®æ ˆ
 				else {
 					boolean isNegative = false;
 					double value = 0.0;
@@ -348,13 +413,14 @@ public class calculator implements Initializable {
 					value = Double.parseDouble(token);
 					if (isNegative)
 						value = -value;
-					operandStack.push(value);// Êı×Ö×Ö·û´®×ª»»³ÉÊı×Ö£¬Ñ¹ÈëÕ»ÖĞ
+					operandStack.push(value);// æ•°å­—å­—ç¬¦ä¸²è½¬æ¢æˆæ•°å­—ï¼Œå‹å…¥æ ˆä¸­
 					OperandToken newToken = new OperandToken(value);
 					myTokens.add(newToken);
-				}
+				}			
+				con++;
 			}
 
-			// µ±Õ»ÖĞ²»ÊÇ¿ÕµÄÊ±ºò¼ÌĞøÔËËã
+			// å½“æ ˆä¸­ä¸æ˜¯ç©ºçš„æ—¶å€™ç»§ç»­è¿ç®—
 			while (!operatorStack.isEmpty()) {
 				processAnOperator(operandStack, operatorStack);
 			}
@@ -370,7 +436,7 @@ public class calculator implements Initializable {
 
 			preLines += curLine + "\n";
             curLine = res;
-			textResult.setText(preLines + curLine);// ÔËËã½á¹û
+			textResult.setText(preLines + curLine);// è¿ç®—ç»“æœ
 		}
 		else {
             preLines += curLine + "\n";
@@ -417,10 +483,10 @@ public class calculator implements Initializable {
 		return source;
 	}
 
-	// ´¦ÀíÕ»ÖĞµÄÁ½¸öÊı¾İ£¬½«Õ»ÖĞµÄÁ½¸öÊı¾İÔËËãÖ®ºóµÄ½á¹û´æ´¢ÔÚÕ»ÖĞ
+	// å¤„ç†æ ˆä¸­çš„ä¸¤ä¸ªæ•°æ®ï¼Œå°†æ ˆä¸­çš„ä¸¤ä¸ªæ•°æ®è¿ç®—ä¹‹åçš„ç»“æœå­˜å‚¨åœ¨æ ˆä¸­
 	public void processAnOperator(Stack<Double> operandStack, Stack<Character> operatorStack) {
-		char op = operatorStack.pop(); // µ¯³öÒ»¸ö²Ù×÷·û
-		double op1 = operandStack.pop(); // µ¯³öÁ¬¸öÁ½¸öÊıÓÃÀ´ºÍ²Ù×÷·ûop½øĞĞÔËËã
+		char op = operatorStack.pop(); // å¼¹å‡ºä¸€ä¸ªæ“ä½œç¬¦
+		double op1 = operandStack.pop(); // å¼¹å‡ºè¿ä¸ªä¸¤ä¸ªæ•°ç”¨æ¥å’Œæ“ä½œç¬¦opè¿›è¡Œè¿ç®—
 		double op2 = operandStack.pop();
 		if (op == '+')
 			operandStack.push(op1 + op2);
