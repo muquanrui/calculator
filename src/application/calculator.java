@@ -37,8 +37,8 @@ public class calculator implements Initializable {
 	private static ArrayList<String> orator = new ArrayList<String>();
 	private static ArrayList<String> orand = new ArrayList<String>();
 
-    private static String preLines;
-    private static String curLine;
+	private static String preLines;
+	private static String curLine;
 
 	/**
 	 * 算数表达式计算处理思路： 程序从左到右的扫描表达式，提取出操作数，操作符，以及括号 1.如果是操作数，直接将其压入operandStack栈中
@@ -51,24 +51,25 @@ public class calculator implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		// TODO (don't really need to do anything here).
-        String textAll = textResult.getText();
-        int currentLine = 0;
-        for(int i=0; i<textAll.length();i++){
-            if(textAll.charAt(i) == '\n'){
-                currentLine = i + 1;
-            }
-        }
-        preLines = textAll.substring(0, currentLine);
-        if(currentLine == textAll.length()){
-            curLine = "";
-        }else{
-            curLine = textAll.substring(currentLine, textAll.length());
-        }
+		String textAll = textResult.getText();
+		int currentLine = 0;
+		for (int i = 0; i < textAll.length(); i++) {
+			if (textAll.charAt(i) == '\n') {
+				currentLine = i + 1;
+			}
+		}
+		preLines = textAll.substring(0, currentLine);
+		if (currentLine == textAll.length()) {
+			curLine = "";
+		} else {
+			curLine = textAll.substring(currentLine, textAll.length());
+		}
 
 	}
 
 	// 使用空格分割字符串
 	public String insetBlanks(String s) {
+		s=s.replaceAll(" ", "");
 		String result = "";
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) == '(' || s.charAt(i) == ')' || s.charAt(i) == '+' || s.charAt(i) == '*'
@@ -79,7 +80,7 @@ public class calculator implements Initializable {
 				while (front > 0 && s.charAt(front) == ' ') {
 					front--;
 				}
-				if (front > 0 && (s.charAt(front) == ')' || (s.charAt(front) >= '0' && s.charAt(front) <= '9'))) {
+				if (front >= 0 && (s.charAt(front) == ')' || (s.charAt(front) >= '0' && s.charAt(front) <= '9'))) {
 					result += " " + s.charAt(i) + " ";
 				} else {
 					result += s.charAt(i);
@@ -87,7 +88,7 @@ public class calculator implements Initializable {
 			} else
 				result += s.charAt(i);
 		}
-
+		
 		return result;
 	}
 
@@ -96,24 +97,26 @@ public class calculator implements Initializable {
 	}
 
 	public ArrayList<String> analyzeExp() {
-	    confirm = true;
-	    myTokens.clear();
-	    orand.clear();
-	    orator.clear();
+		confirm = true;
+		myTokens.clear();
+		orand.clear();
+		orator.clear();
 		String newExpression = insetBlanks(curLine);
 		String[] tokens1 = newExpression.split(" ");
 
 		ArrayList<String> tokens = new ArrayList<String>(Arrays.asList(tokens1));
-		
+
 		Stack<Character> brackets = new Stack<>();
 		Stack<String> orandS = new Stack<>();
 		Stack<String> oratorS = new Stack<>();
-		
-		String newLine=curLine;
-		
+
+		String newLine = curLine;
+		int con=0;
+
 		System.out.println(tokens);
-		
+
 		for (int i = 0; i < tokens.size(); i++) {
+			
 			String token = tokens.get(i);
 			if (token.length() == 0) {
 				tokens.remove(i);
@@ -121,25 +124,37 @@ public class calculator implements Initializable {
 			} else if (Pattern.matches(numPattern, token)) {
 				orator.add(token);
 				oratorS.push(token);
-				
-				double d=Double.parseDouble(token);
-								
-				if(d<0) {
-					newLine=newLine.replaceFirst("-", "@");
+
+				double d = Double.parseDouble(token);
+
+				if (d < 0) {
+					newLine = newLine.replaceFirst("-", "@");
+					con++;
 				}
-				
+
 			} else if (Pattern.matches(operandPattern, token)) {
-				orand.add(token);		
+				orand.add(token);
 				if (token.equals("(")) {
 					brackets.push(token.charAt(0));
+					if (i>0&&Pattern.matches(numPattern, tokens.get(i - 1))) {
+						confirm = false;
+						System.err.println("错误!\t位置：" + con + " \t原因：左括号前不能直接加操作数");
+					}
 				} else if (token.equals(")")) {
+					
+					if (i<tokens.size()-1&&Pattern.matches(numPattern, tokens.get(i + 1))) {
+						confirm = false;
+						System.err.println("错误!\t位置：" + (newLine.indexOf(token)+1) + "\t原因：右括号后不能直接加操作数");
+						newLine.replaceFirst("\\(", "@");
+					}
+					
 					try {
 						brackets.pop();
 					} catch (Exception e) {
 						confirm = false;
-						
-						System.err.println("错误! 位置：" + newLine.indexOf(token) + " 原因：输入括号未闭合");
-						
+
+						System.err.println("错误!\t位置：" + newLine.indexOf(token) + "\t原因：输入括号未闭合");
+
 						if (orand.indexOf("(") != -1) {
 							orand.remove(orand.lastIndexOf("("));
 						}
@@ -147,77 +162,83 @@ public class calculator implements Initializable {
 						tokens.remove(i);
 						i--;
 					}
-				} else if(token.equals("!")) {
-					
-				} else if(token.equals("^")){
-					
-				} else if(token.equals("√")) {
-					
-				}
-				else {
-					orandS.push(token);			
+				} else if (token.equals("!")) {
+					if (i<tokens.size()-1&&Pattern.matches(numPattern, tokens.get(i + 1))) {
+						confirm = false;
+						System.err.println("错误!\t位置：" + (newLine.indexOf(token)+1) + "\t原因：阶乘符号后不能直接加操作数");
+					}
+				} else if (token.equals("^")) {
+					if (i<tokens.size()-1&&Pattern.matches(numPattern, tokens.get(i + 1))) {
+						confirm = false;
+						System.err.println("错误!\t位置：" + (newLine.indexOf(token)+1) + "\t原因：平方符号不能直接加操作数");
+					}
+
+				} else if (token.equals("√")) {
+					if (i<tokens.size()-1&&Pattern.matches(numPattern, tokens.get(i + 1))) {
+						confirm = false;
+						System.err.println("错误!\t位置：" + (newLine.indexOf(token)+1) + "\t原因：开方符号后不能直接加操作数");
+					}
+				} else {
+					orandS.push(token);
 					try {
 						oratorS.pop();
-					} catch(Exception e) {
+					} catch (Exception e) {
 						confirm = false;
-						System.err.println("错误! 位置：" + newLine.indexOf(token) + " 原因：操作符使用错误");
+						System.err.println("错误!\t位置：" + newLine.indexOf(token) + "\t原因：操作符使用错误");
 						orand.remove(orand.lastIndexOf(token));
 						tokens.remove(i);
 						i--;
-					
+
 					}
 				}
-				
-				if(token.charAt(0)!='(') {
-					if(token.charAt(0)!='-') {
-						newLine=newLine.replaceFirst("\\" +token, "@");
+
+				if (token.charAt(0) != '(') {
+					if (token.charAt(0) != '-') {
+						newLine = newLine.replaceFirst("\\" + token, "@");
+					} else {
+						newLine = newLine.replaceFirst(token, "@");
 					}
-					else {
-						newLine=newLine.replaceFirst(token, "@");
-					}	
 				}
-				
-				
+
 			} else {
 				if (tokens.indexOf(token) + 1 < tokens.size()) {
 					tokens.remove(i + 1);
 				}
-				
+
 				tokens.remove(i);
 				i--;
-				
+
 				confirm = false;
-				
-				int pos=0;
-				for(int j=0;j<token.length();j++) {
-					char c=token.charAt(j);
-					if(c=='-'||c=='.'||(c>='0' && c<='9')) {
+
+				int pos = 0;
+				for (int j = 0; j < token.length(); j++) {
+					char c = token.charAt(j);
+					if (c == '-' || c == '.' || (c >= '0' && c <= '9')) {
 						continue;
 					}
-					pos=j;
+					pos = j;
 					break;
-				}			
-				confirm = false;		
-				System.err.println("错误! 位置：" + (newLine.indexOf(token)+pos) + " 原因：输入包含无效字符");
-				
+				}
+				confirm = false;
+				System.err.println("错误!\t位置：" + (newLine.indexOf(token) + pos) + "\t原因：输入包含无效字符");
+
 				char b[] = new char[token.length()];
-			    Arrays.fill(b, 'c');
-			    String re = new String(b);
-				newLine=newLine.replaceFirst(token, re);
-			}		
+				Arrays.fill(b, 'c');
+				String re = new String(b);
+				newLine = newLine.replaceFirst(token, re);
+			}
+			con++;
 		}
-		
-		
-		
-		while(!brackets.isEmpty()) {	
-			System.err.println("错误! 位置：" + newLine.indexOf("(") + " 原因：括号未闭合");
+
+		while (!brackets.isEmpty()) {
+			System.err.println("错误!\t位置：" + newLine.indexOf("(") + "\t原因：括号未闭合");
 			confirm = false;
-			newLine=newLine.replaceFirst("\\(", "#");
+			newLine = newLine.replaceFirst("\\(", "#");
 			orand.remove(orand.lastIndexOf("("));
 			tokens.remove(tokens.lastIndexOf("("));
-			brackets.pop();		
+			brackets.pop();
 		}
-		
+
 		System.out.println("原始表达式：" + curLine);
 		System.out.println("操作数：" + orator);
 		System.out.println("操作符：" + orand);
@@ -227,95 +248,95 @@ public class calculator implements Initializable {
 
 	}
 
-    @FXML
-    public void pressNum(ActionEvent event){
-        Object btnNum=event.getSource();
-        Button btnCur = (Button) btnNum;
-        if(curLine.equals("0")){
-            curLine = "";
-        }
-        curLine += btnCur.getText();
-        textResult.setText(preLines + curLine);
-    }
+	@FXML
+	public void pressNum(ActionEvent event) {
+		Object btnNum = event.getSource();
+		Button btnCur = (Button) btnNum;
+		if (curLine.equals("0")) {
+			curLine = "";
+		}
+		curLine += btnCur.getText();
+		textResult.setText(preLines + curLine);
+	}
 
-    @FXML
-    public void pressOperand(ActionEvent event){
-        Object btnNum=event.getSource();
-        Button btnCur = (Button) btnNum;
-        String operandPress = btnCur.getText();
-        if(operandPress.equals("＋")){
-            curLine += "+";
-        }else if(operandPress.equals("－")){
-            curLine += "-";
-        }else if(operandPress.equals("×")){
-            curLine += "*";
-        }else if(operandPress.equals("÷")){
-            curLine += "/";
-        }else{
-            curLine += operandPress;
-        }
+	@FXML
+	public void pressOperand(ActionEvent event) {
+		Object btnNum = event.getSource();
+		Button btnCur = (Button) btnNum;
+		String operandPress = btnCur.getText();
+		if (operandPress.equals("＋")) {
+			curLine += "+";
+		} else if (operandPress.equals("－")) {
+			curLine += "-";
+		} else if (operandPress.equals("×")) {
+			curLine += "*";
+		} else if (operandPress.equals("÷")) {
+			curLine += "/";
+		} else {
+			curLine += operandPress;
+		}
 
-        textResult.setText(preLines + curLine);
-    }
+		textResult.setText(preLines + curLine);
+	}
 
-    @FXML
-    public void pressBackspace(ActionEvent event){
-        curLine = curLine.substring(0, curLine.length() - 1);
-        if(curLine.length() == 0){
-            curLine = "0";
-        }
-        textResult.setText(preLines + curLine);
-    }
+	@FXML
+	public void pressBackspace(ActionEvent event) {
+		curLine = curLine.substring(0, curLine.length() - 1);
+		if (curLine.length() == 0) {
+			curLine = "0";
+		}
+		textResult.setText(preLines + curLine);
+	}
 
-    @FXML
-    public void clearAll(ActionEvent event){
-	    preLines = "";
-	    curLine = "0";
-        textResult.setText(preLines + curLine);
-    }
+	@FXML
+	public void clearAll(ActionEvent event) {
+		preLines = "";
+		curLine = "0";
+		textResult.setText(preLines + curLine);
+	}
 
-    @FXML
-    public void clearError(ActionEvent event){
-        curLine = "0";
-        textResult.setText(preLines + curLine);
-    }
+	@FXML
+	public void clearError(ActionEvent event) {
+		curLine = "0";
+		textResult.setText(preLines + curLine);
+	}
 
-    @FXML
-    public void toNegative(ActionEvent event){
-	    if(trim(curLine, '0').length() == 0) return;
-	    int lastNum = curLine.length() - 1;
-	    while(lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))){
-	        lastNum--;
-        }
-        StringBuilder cl = new StringBuilder(curLine);
-	    if(lastNum >= 0 && cl.charAt(lastNum) == '-' && !Character.isDigit(cl.charAt(lastNum - 1))){
-	        cl.deleteCharAt(lastNum);
-        }else{
-            cl.insert(lastNum + 1, '-');
-        }
-	    curLine = new String(cl);
-        textResult.setText(preLines + curLine);
-    }
+	@FXML
+	public void toNegative(ActionEvent event) {
+		if (trim(curLine, '0').length() == 0)
+			return;
+		int lastNum = curLine.length() - 1;
+		while (lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))) {
+			lastNum--;
+		}
+		StringBuilder cl = new StringBuilder(curLine);
+		if (lastNum >= 0 && cl.charAt(lastNum) == '-' && !Character.isDigit(cl.charAt(lastNum - 1))) {
+			cl.deleteCharAt(lastNum);
+		} else {
+			cl.insert(lastNum + 1, '-');
+		}
+		curLine = new String(cl);
+		textResult.setText(preLines + curLine);
+	}
 
-    @FXML
-    public void toFact(ActionEvent event) {
-    	curLine+="!";
-    	textResult.setText(curLine);
-    }
-    
-    @FXML
-    public void toRoot(ActionEvent event) {
-    	curLine+="√";
-    	textResult.setText(curLine);
-    }
-    
-    @FXML
-    public void toSquare(ActionEvent event) {
-    	curLine+="^";
-    	textResult.setText(curLine);
-    }
-    
-    
+	@FXML
+	public void toFact(ActionEvent event) {
+		curLine += "!";
+		textResult.setText(curLine);
+	}
+
+	@FXML
+	public void toRoot(ActionEvent event) {
+		curLine += "√";
+		textResult.setText(curLine);
+	}
+
+	@FXML
+	public void toSquare(ActionEvent event) {
+		curLine += "^";
+		textResult.setText(curLine);
+	}
+
 	// 操作数、操作符入栈
 	@FXML
 	public void evaluateExp(ActionEvent event) {
@@ -326,10 +347,10 @@ public class calculator implements Initializable {
 			Stack<Double> operandStack = new Stack<>();
 			Stack<Character> operatorStack = new Stack<>();
 
-			int con=0;
-			
+			int con = 0;
+
 			for (String token : tokens) {
-				
+
 				if (token.length() == 0) // 如果是空格就继续循环
 					continue;
 				// 当前运算符是加减,无论操作符栈是什么运算符都要运算
@@ -351,39 +372,34 @@ public class calculator implements Initializable {
 					operatorStack.push(token.charAt(0)); // 当前运算符入栈
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
-				}
-				else if(token.charAt(0) == '!') {
-					double cur=operandStack.pop();
-					double now=1;
-					for(int i=1;i<=cur;i++) {
-						now*=i;
+				} else if (token.charAt(0) == '!') {
+					double cur = operandStack.pop();
+					double now = 1;
+					for (int i = 1; i <= cur; i++) {
+						now *= i;
 						System.out.println(now);
-					}	
+					}
 					operandStack.push(now);
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
-				}
-				else if(token.charAt(0) == '^') {
-					double cur=operandStack.pop();
-					
-					if(con==1&&cur<0) {
-						operandStack.push(-(cur*cur));
-					}
-					else {
-						operandStack.push(cur*cur);
+				} else if (token.charAt(0) == '^') {
+					double cur = operandStack.pop();
+
+					if (con == 1 && cur < 0) {
+						operandStack.push(-(cur * cur));
+					} else {
+						operandStack.push(cur * cur);
 					}
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
-					
-				}
-				else if(token.charAt(0) == '√') {
-					double cur=operandStack.pop();
-					if(con==1&&cur<0) {
+
+				} else if (token.charAt(0) == '√') {
+					double cur = operandStack.pop();
+					if (con == 1 && cur < 0) {
 						operandStack.push(-Math.sqrt(-cur));
-					}
-					else {
+					} else {
 						operandStack.push(Math.sqrt(cur));
-					}	
+					}
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 				}
@@ -416,7 +432,7 @@ public class calculator implements Initializable {
 					operandStack.push(value);// 数字字符串转换成数字，压入栈中
 					OperandToken newToken = new OperandToken(value);
 					myTokens.add(newToken);
-				}			
+				}
 				con++;
 			}
 
@@ -430,25 +446,24 @@ public class calculator implements Initializable {
 			DecimalFormat df = new DecimalFormat("0.000000000000");
 			String res = df.format(operandStack.pop());
 			res = trim(res, '0');
-			if(res.charAt(res.length() - 1) == '.'){
-			    res = res.substring(0, res.length() - 1);
-            }
+			if (res.charAt(res.length() - 1) == '.') {
+				res = res.substring(0, res.length() - 1);
+			}
 
 			preLines += curLine + "\n";
-            curLine = res;
+			curLine = res;
 			textResult.setText(preLines + curLine);// 运算结果
-		}
-		else {
-            preLines += curLine + "\n";
-            curLine = "0";
-            textResult.setText(preLines + "Error");
+		} else {
+			preLines += curLine + "\n";
+			curLine = "0";
+			textResult.setText(preLines + "Error");
 		}
 		scrollToBottom();
 	}
 
-	public void scrollToBottom(){
-	    scrollResult.setVvalue(1);
-    }
+	public void scrollToBottom() {
+		scrollResult.setVvalue(1);
+	}
 
 	public void printOutTokens() {
 		if (myTokens.size() == 0) {
