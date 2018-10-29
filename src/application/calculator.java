@@ -1,6 +1,9 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -65,6 +68,25 @@ public class calculator implements Initializable {
 			curLine = textAll.substring(currentLine, textAll.length());
 		}
 
+		doTests();
+
+	}
+	
+	private void doTests() {
+		try {
+	        InputStreamReader isr = new InputStreamReader(new FileInputStream("test.txt"), "GBK");
+	        BufferedReader br = new BufferedReader(isr);
+	        String line = "";
+            while ((line = br.readLine()) != null) {
+    			curLine = line;
+    			doCalculate();
+    			System.out.println("------------------");
+            }
+            br.close();
+            isr.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 	}
 
 	// 使用空格分割字符串
@@ -376,8 +398,15 @@ public class calculator implements Initializable {
 					double cur = operandStack.pop();
 					double now = 1;
 					for (int i = 1; i <= cur; i++) {
-						now *= i;
-						System.out.println(now);
+						if(now*i<Double.MAX_VALUE) {
+							now *= i;
+						}
+						else {
+							confirm=false;
+							System.err.println("溢出!");
+							break;
+						}
+						
 					}
 					operandStack.push(now);
 					OperatorToken newToken = new OperatorToken(token);
@@ -385,10 +414,27 @@ public class calculator implements Initializable {
 				} else if (token.charAt(0) == '^') {
 					double cur = operandStack.pop();
 
+
 					if (con == 1 && cur < 0) {
-						operandStack.push(-(cur * cur));
+						double now=-(cur * cur);
+						if(now<Double.MAX_VALUE) {
+							operandStack.push(-(cur * cur));
+						}			
+						else {
+							confirm=false;
+							System.err.println("溢出!");
+							break;
+						}
 					} else {
-						operandStack.push(cur * cur);
+						double now=cur * cur;
+						if(now<Double.MAX_VALUE) {
+							operandStack.push(cur * cur);
+						}
+						else {
+							confirm=false;
+							System.err.println("溢出!");
+							break;
+						}
 					}
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
@@ -461,6 +507,152 @@ public class calculator implements Initializable {
 		scrollToBottom();
 	}
 
+	private void doCalculate() {
+
+		ArrayList<String> tokens = analyzeExp();
+
+		if (confirm) {
+			Stack<Double> operandStack = new Stack<>();
+			Stack<Character> operatorStack = new Stack<>();
+
+			int con = 0;
+
+			for (String token : tokens) {
+
+				if (token.length() == 0) // 如果是空格就继续循环
+					continue;
+				// 当前运算符是加减,无论操作符栈是什么运算符都要运算
+				else if (token.length() == 1 && (token.charAt(0) == '+' || token.charAt(0) == '-')) {
+					// 当栈不为空，并且栈中最上面的一个元素是加减乘除的任意一个
+					while (!operatorStack.isEmpty() && (operatorStack.peek() == '-' || operatorStack.peek() == '+'
+							|| operatorStack.peek() == '/' || operatorStack.peek() == '*')) {
+						processAnOperator(operandStack, operatorStack); // 开始运算
+					}
+					operatorStack.push(token.charAt(0)); // 当前运算符入栈
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+				}
+				// 当前运算符是乘除，判断最上面的是否是乘除，如果是乘除就运算，不是就直接入栈
+				else if (token.charAt(0) == '*' || token.charAt(0) == '/') {
+					while (!operatorStack.isEmpty() && (operatorStack.peek() == '/' || operatorStack.peek() == '*')) {
+						processAnOperator(operandStack, operatorStack);
+					}
+					operatorStack.push(token.charAt(0)); // 当前运算符入栈
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+				} else if (token.charAt(0) == '!') {
+					double cur = operandStack.pop();
+					double now = 1;
+					for (int i = 1; i <= cur; i++) {
+						if(now*i<Double.MAX_VALUE) {
+							now *= i;
+							continue;
+						}
+						else {
+							confirm=false;
+							System.err.println("溢出!");
+							break;
+						}
+					}
+					operandStack.push(now);
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+				} else if (token.charAt(0) == '^') {
+					double cur = operandStack.pop();
+
+
+					if (con == 1 && cur < 0) {
+						double now=-(cur * cur);
+						if(now<Double.MAX_VALUE) {
+							operandStack.push(-(cur * cur));
+						}			
+						else {
+							confirm=false;
+							System.err.println("溢出!");
+							break;
+						}
+					} else {
+						double now=cur * cur;
+						if(now<Double.MAX_VALUE) {
+							operandStack.push(cur * cur);
+						}
+						else {
+							confirm=false;
+							System.err.println("溢出!");
+							break;
+						}
+					}
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+
+				} else if (token.charAt(0) == '√') {
+					double cur = operandStack.pop();
+					if (con == 1 && cur < 0) {
+						operandStack.push(-Math.sqrt(-cur));
+					} else {
+						operandStack.push(Math.sqrt(cur));
+					}
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+				}
+				// 当前运算符是左括号，直接入栈
+				else if (token.trim().charAt(0) == '(') {
+					operatorStack.push('(');
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+				}
+				// 当前运算符是右括号的，清除栈中的运算符直至左括号
+				else if (token.trim().charAt(0) == ')') {
+					OperatorToken newToken = new OperatorToken(token);
+					myTokens.add(newToken);
+					while (operatorStack.peek() != '(') {
+						processAnOperator(operandStack, operatorStack);// 开始运算
+					}
+					operatorStack.pop();// 清除左括号
+				}
+				// 当前是数字的话，直接入数据栈
+				else {
+					boolean isNegative = false;
+					double value = 0.0;
+					if (token.charAt(0) == '-') {
+						isNegative = true;
+						token = token.substring(1, token.length());
+					}
+					value = Double.parseDouble(token);
+					if (isNegative)
+						value = -value;
+					operandStack.push(value);// 数字字符串转换成数字，压入栈中
+					OperandToken newToken = new OperandToken(value);
+					myTokens.add(newToken);
+				}
+				con++;
+			}
+
+			// 当栈中不是空的时候继续运算
+			while (!operatorStack.isEmpty()) {
+				processAnOperator(operandStack, operatorStack);
+			}
+
+			printOutTokens();
+
+			DecimalFormat df = new DecimalFormat("0.000000000000");
+			String res = df.format(operandStack.pop());
+			res = trim(res, '0');
+			if (res.charAt(res.length() - 1) == '.') {
+				res = res.substring(0, res.length() - 1);
+			}
+
+			preLines += curLine + "\n";
+			curLine = res;
+			textResult.setText(preLines + curLine);// 运算结果
+		} else {
+			preLines += curLine + "\n";
+			curLine = "0";
+			textResult.setText(preLines + "Error");
+		}
+		scrollToBottom();
+	}
+	
 	public void scrollToBottom() {
 		scrollResult.setVvalue(1);
 	}
@@ -503,14 +695,19 @@ public class calculator implements Initializable {
 		char op = operatorStack.pop(); // 弹出一个操作符
 		double op1 = operandStack.pop(); // 弹出连个两个数用来和操作符op进行运算
 		double op2 = operandStack.pop();
-		if (op == '+')
+		if (op == '+'&&op1 + op2<Double.MAX_VALUE)
 			operandStack.push(op1 + op2);
-		else if (op == '-')
+		else if (op == '-'&&op1 + op2<Double.MAX_VALUE)
 			operandStack.push(op2 - op1);
-		else if (op == '*')
+		else if (op == '*'&&op1 + op2<Double.MAX_VALUE)
 			operandStack.push(op1 * op2);
-		else if (op == '/')
+		else if (op == '/'&&op1 + op2<Double.MAX_VALUE)
 			operandStack.push(op2 / op1);
+		else {
+			confirm=false;
+			System.err.println("溢出!");
+		}
+	
 	}
 
 	protected static class OperandToken extends Token {
