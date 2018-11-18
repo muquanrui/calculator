@@ -174,19 +174,19 @@ public class calculator implements Initializable {
 	@FXML
 	public void toFact(ActionEvent event) {
 		curLine += "!";
-		textResult.setText(curLine);
+		textResult.setText(preLines + curLine);
 	}
 
 	@FXML
 	public void toRoot(ActionEvent event) {
 		curLine += "√";
-		textResult.setText(curLine);
+		textResult.setText(preLines + curLine);
 	}
 
 	@FXML
 	public void toSquare(ActionEvent event) {
 		curLine += "^";
-		textResult.setText(curLine);
+		textResult.setText(preLines + curLine);
 	}
 
 	
@@ -210,6 +210,7 @@ public class calculator implements Initializable {
 			textResult.setText(preLines + "Error");
 		}
 		scrollToBottom();
+		result.printTree();
 	}
 	
 	public String trim(String source, char trimChar) {

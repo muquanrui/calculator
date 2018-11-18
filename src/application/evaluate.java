@@ -13,6 +13,9 @@ public class evaluate {
 	private static ArrayList<Token> myTokens = new ArrayList<Token>();
 	private static ArrayList<String> orator = new ArrayList<String>();
 	private static ArrayList<String> orand = new ArrayList<String>();
+	private Stack<CNode> lnodeStack = new Stack<>();
+	private Stack<CBNode> bnodeStack = new Stack<>();
+	private CTree ct = new CTree();
 
 	private boolean confirm = true;
 
@@ -215,6 +218,7 @@ public class evaluate {
 						processAnOperator(operandStack, operatorStack); // 开始运算
 					}
 					operatorStack.push(token.charAt(0)); // 当前运算符入栈
+					bnodeStack.push(new CBNode(token)); //构造操作符对应的枝节点
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 				}
@@ -224,11 +228,13 @@ public class evaluate {
 						processAnOperator(operandStack, operatorStack);
 					}
 					operatorStack.push(token.charAt(0)); // 当前运算符入栈
+					bnodeStack.push(new CBNode(token)); //构造操作符对应的枝节点
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
-				} 
+				}
 				else if (token.charAt(0) == '!') {
 					double cur = operandStack.pop();
+					CNode cn = lnodeStack.pop();
 					double now = 1;
 					for (int i = 1; i <= cur; i++) {
 						if (now * i < Double.MAX_VALUE) {
@@ -241,12 +247,18 @@ public class evaluate {
 
 					}
 					operandStack.push(now);
+					//构造对应枝节点
+					CBNode cb = new CBNode(token);
+					cb.lChild = cn;
+					cb.isSingle = true;
+					lnodeStack.push(cb);
+					ct.setRoot(cb);
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 				} 
 				else if (token.charAt(0) == '^') {
 					double cur = operandStack.pop();
-
+					CNode cn = lnodeStack.pop();
 					if (con == 1 && cur < 0) {
 						double now = -(cur * cur);
 						if (now < Double.MAX_VALUE) {
@@ -266,17 +278,30 @@ public class evaluate {
 							break;
 						}
 					}
+					//构造对应枝节点
+					CBNode cb = new CBNode(token);
+					cb.lChild = cn;
+					cb.isSingle = true;
+					lnodeStack.push(cb);
+					ct.setRoot(cb);
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 
 				} 
 				else if (token.charAt(0) == '√') {
 					double cur = operandStack.pop();
+					CNode cn = lnodeStack.pop();
 					if (con == 1 && cur < 0) {
 						operandStack.push(-Math.sqrt(-cur));
 					} else {
 						operandStack.push(Math.sqrt(cur));
 					}
+					//构造对应枝节点
+					CBNode cb = new CBNode(token);
+					cb.lChild = cn;
+					cb.isSingle = true;
+					lnodeStack.push(cb);
+					ct.setRoot(cb);
 					OperatorToken newToken = new OperatorToken(token);
 					myTokens.add(newToken);
 				}
@@ -312,6 +337,9 @@ public class evaluate {
 					operandStack.push(value);// 数字字符串转换成数字，压入栈中
 					OperandToken newToken = new OperandToken(value);
 					myTokens.add(newToken);
+					//构造数字对应的叶子节点
+					CLNode cNode = new CLNode(Double.toString(value));
+					lnodeStack.push(cNode);
 				}
 				con++;
 			}
@@ -320,6 +348,8 @@ public class evaluate {
 			while (!operatorStack.isEmpty()) {
 				processAnOperator(operandStack, operatorStack);
 			}
+			
+			ct.setRoot(lnodeStack.pop());
 
 			DecimalFormat df = new DecimalFormat("0.000000000000");
 			String res = df.format(operandStack.pop());
@@ -331,7 +361,6 @@ public class evaluate {
 			return res;
 		} 
 		else {
-		
 			return "Error";
 		}
 	}
@@ -341,6 +370,7 @@ public class evaluate {
 		char op = operatorStack.pop(); // 弹出一个操作符
 		double op1 = operandStack.pop(); // 弹出连个两个数用来和操作符op进行运算
 		double op2 = operandStack.pop();
+		double res = 0.0;
 		if (op == '+' && op1 + op2 < Double.MAX_VALUE)
 			operandStack.push(op1 + op2);
 		else if (op == '-' && op1 + op2 < Double.MAX_VALUE)
@@ -352,6 +382,41 @@ public class evaluate {
 		else {
 			confirm = false;
 			System.err.println("溢出!");
+		}
+
+		CBNode cb = bnodeStack.pop();
+		CNode cn1 = lnodeStack.pop();
+		CNode cn2 = lnodeStack.pop();
+		cb.lChild = cn2;
+		cb.rChild = cn1;
+		lnodeStack.push(cb);
+		ct.setRoot(cb);
+	}
+	
+	protected static class CLNode extends CNode{
+		private String text;
+		private double value;
+
+		public CLNode(String txt) {
+			super(txt);
+			value = Double.valueOf(txt);
+		}
+
+		public double getValue() {
+			return value;
+		}
+		
+		public boolean isLeaf() {
+			return true;
+		}
+
+	}
+	
+	protected static class CBNode extends CNode{
+		private String text;
+
+		public CBNode(String txt) {
+			super(txt);
 		}
 
 	}
@@ -401,5 +466,23 @@ public class evaluate {
 		}
 
 		return source;
+	}
+	
+	public void printTree() {
+		if(confirm) {
+			scanTree(ct.getRoot(), 1);
+		}else {
+			System.out.println("语法不符合规范，无语法树输出！");
+		}
+	}
+	
+	private void scanTree(CNode cn, int depth) {
+		System.out.println("第" + depth + "层节点：" + cn.getText());
+		if(!cn.isLeaf()) {
+			scanTree(cn.lChild, depth + 1);
+			if(!cn.isSingle) {
+				scanTree(cn.rChild, depth + 1);
+			}
+		}
 	}
 }
