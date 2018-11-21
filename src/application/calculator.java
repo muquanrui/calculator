@@ -116,6 +116,10 @@ public class calculator implements Initializable {
 		Object btnNum = event.getSource();
 		Button btnCur = (Button) btnNum;
 		String operandPress = btnCur.getText();
+		if (curLine.equals("0")) {
+			curLine = "";
+		}
+		
 		if (operandPress.equals("＋")) {
 			curLine += "+";
 		} else if (operandPress.equals("－")) {
@@ -173,18 +177,27 @@ public class calculator implements Initializable {
 
 	@FXML
 	public void toFact(ActionEvent event) {
+		if (curLine.equals("0")) {
+			curLine = "";
+		}
 		curLine += "!";
 		textResult.setText(preLines + curLine);
 	}
 
 	@FXML
 	public void toRoot(ActionEvent event) {
+		if (curLine.equals("0")) {
+			curLine = "";
+		}
 		curLine += "√";
 		textResult.setText(preLines + curLine);
 	}
 
 	@FXML
 	public void toSquare(ActionEvent event) {
+		if (curLine.equals("0")) {
+			curLine = "";
+		}
 		curLine += "^";
 		textResult.setText(preLines + curLine);
 	}
@@ -227,52 +240,52 @@ public class calculator implements Initializable {
 	public void press(KeyEvent event) {
 		KeyCode code=event.getCode();
 		switch(code) {
-		case DIGIT0:
+		case NUMPAD0:
 			curLine+="0";
 			textResult.setText(preLines + curLine);
 			Num0.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT1:
+		case NUMPAD1:
 			curLine+="1";
 			textResult.setText(preLines + curLine);
 			Num1.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT2:
+		case NUMPAD2:
 			curLine+="2";
 			textResult.setText(preLines + curLine);
 			Num2.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT3:
+		case NUMPAD3:
 			curLine+="3";
 			textResult.setText(preLines + curLine);
 			Num3.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT4:
+		case NUMPAD4:
 			curLine+="4";
 			textResult.setText(preLines + curLine);
 			Num4.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT5:
+		case NUMPAD5:
 			curLine+="5";
 			textResult.setText(preLines + curLine);
 			Num5.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT6:
+		case NUMPAD6:
 			curLine+="6";
 			textResult.setText(preLines + curLine);
 			Num6.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT7:
+		case NUMPAD7:
 			curLine+="7";
 			textResult.setText(preLines + curLine);
 			Num7.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT8:
+		case NUMPAD8:
 			curLine+="8";
 			textResult.setText(preLines + curLine);
 			Num8.setStyle("-fx-background-color: #D9D9D9;"); 
 			break;
-		case DIGIT9:
+		case NUMPAD9:
 			curLine+="9";
 			textResult.setText(preLines + curLine);
 			Num8.setStyle("-fx-background-color: #D9D9D9;"); 
@@ -284,37 +297,36 @@ public class calculator implements Initializable {
 	public void release(KeyEvent event) {
 		KeyCode code=event.getCode();
 		switch(code) {
-		case DIGIT0:
+		case NUMPAD0:
 			Num0.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT1:
+		case NUMPAD1:
 			Num1.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT2:
+		case NUMPAD2:
 			Num2.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT3:
+		case NUMPAD3:
 			Num3.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT4:
+		case NUMPAD4:
 			Num4.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT5:
+		case NUMPAD5:
 			Num5.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT6:
+		case NUMPAD6:
 			Num6.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT7:
+		case NUMPAD7:
 			Num7.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT8:
+		case NUMPAD8:
 			Num8.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
-		case DIGIT9:
+		case NUMPAD9:
 			Num9.setStyle("-fx-background-color: #A9A9A9;"); 
 			break;
 		}
 	}
-	
 }

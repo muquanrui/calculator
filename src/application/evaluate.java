@@ -233,19 +233,32 @@ public class evaluate {
 					myTokens.add(newToken);
 				}
 				else if (token.charAt(0) == '!') {
+					if(operandStack.isEmpty()) {
+						confirm = false;
+						System.err.println("阶乘符号使用错误!");
+						return "Error";
+					}
 					double cur = operandStack.pop();
 					CNode cn = lnodeStack.pop();
 					double now = 1;
-					for (int i = 1; i <= cur; i++) {
-						if (now * i < Double.MAX_VALUE) {
-							now *= i;
-						} else {
-							confirm = false;
-							System.err.println("溢出!");
-							break;
-						}
-
+					if(cur<=0) {
+						confirm = false;
+						System.err.println("不能计算负数阶乘!");
+						return "Error";
 					}
+					else {
+						for (int i = 1; i <= cur; i++) {
+							if (now * i < Double.MAX_VALUE) {
+								now *= i;
+							} else {
+								confirm = false;
+								System.err.println("溢出!");
+								return "Error";
+							}
+
+						}
+					}
+					
 					operandStack.push(now);
 					//构造对应枝节点
 					CBNode cb = new CBNode(token);
@@ -257,6 +270,11 @@ public class evaluate {
 					myTokens.add(newToken);
 				} 
 				else if (token.charAt(0) == '^') {
+					if(operandStack.isEmpty()) {
+						confirm = false;
+						System.err.println("平方符号使用错误!");
+						return "Error";
+					}
 					double cur = operandStack.pop();
 					CNode cn = lnodeStack.pop();
 					if (con == 1 && cur < 0) {
@@ -266,7 +284,7 @@ public class evaluate {
 						} else {
 							confirm = false;
 							System.err.println("溢出!");
-							break;
+							return "Error";
 						}
 					} else {
 						double now = cur * cur;
@@ -275,7 +293,7 @@ public class evaluate {
 						} else {
 							confirm = false;
 							System.err.println("溢出!");
-							break;
+							return "Error";
 						}
 					}
 					//构造对应枝节点
@@ -289,6 +307,11 @@ public class evaluate {
 
 				} 
 				else if (token.charAt(0) == '√') {
+					if(operandStack.isEmpty()) {
+						confirm = false;
+						System.err.println("开方符号使用错误!");
+						return "Error";
+					}
 					double cur = operandStack.pop();
 					CNode cn = lnodeStack.pop();
 					if (con == 1 && cur < 0) {
