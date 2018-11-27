@@ -68,6 +68,52 @@ public class calculator implements Initializable {
 	@FXML
 	private Button Num9;
 	
+	@FXML
+	private Button Factorial;
+	
+	@FXML
+	private Button Square;
+	
+	@FXML
+	private Button Root;
+	
+	@FXML
+	private Button ClearError;
+	
+	@FXML
+	private Button Clear;
+	
+	@FXML
+	private Button Divide;
+	
+	@FXML
+	private Button Negative;
+	
+	@FXML
+	private Button Backspace;
+	
+	@FXML
+	private Button Multiply;
+	
+	@FXML
+	private Button Minus;
+	
+	@FXML
+	private Button Plus;
+	
+	@FXML
+	private Button Dot;
+	
+	@FXML
+	private Button Equal;
+	
+	@FXML
+	private Button BracketLeft;
+	
+	@FXML
+	private Button BracketRight;
+		
+	
 	
 	private static String preLines;
 	private static String curLine;
@@ -116,9 +162,7 @@ public class calculator implements Initializable {
 		Object btnNum = event.getSource();
 		Button btnCur = (Button) btnNum;
 		String operandPress = btnCur.getText();
-		if (curLine.equals("0")) {
-			curLine = "";
-		}
+		
 		
 		if (operandPress.equals("＋")) {
 			curLine += "+";
@@ -238,94 +282,299 @@ public class calculator implements Initializable {
 	}
 	
 	public void press(KeyEvent event) {
-		KeyCode code=event.getCode();
-		switch(code) {
-		case NUMPAD0:
-			curLine+="0";
-			textResult.setText(preLines + curLine);
-			Num0.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD1:
-			curLine+="1";
-			textResult.setText(preLines + curLine);
-			Num1.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD2:
-			curLine+="2";
-			textResult.setText(preLines + curLine);
-			Num2.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD3:
-			curLine+="3";
-			textResult.setText(preLines + curLine);
-			Num3.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD4:
-			curLine+="4";
-			textResult.setText(preLines + curLine);
-			Num4.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD5:
-			curLine+="5";
-			textResult.setText(preLines + curLine);
-			Num5.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD6:
-			curLine+="6";
-			textResult.setText(preLines + curLine);
-			Num6.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD7:
-			curLine+="7";
-			textResult.setText(preLines + curLine);
-			Num7.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD8:
-			curLine+="8";
-			textResult.setText(preLines + curLine);
-			Num8.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
-		case NUMPAD9:
-			curLine+="9";
-			textResult.setText(preLines + curLine);
-			Num8.setStyle("-fx-background-color: #D9D9D9;"); 
-			break;
+		if(event.isShiftDown()) {
+			KeyCode code=event.getCode();
+			switch(code) {
+			case EQUALS:
+				curLine+="+";
+				textResult.setText(preLines + curLine);
+				Plus.setStyle("-fx-background-color: #F0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT8:
+				curLine+="*";
+				textResult.setText(preLines + curLine);
+				Multiply.setStyle("-fx-background-color: #F0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+
+				break;
+			case DIGIT9:
+				curLine+="(";
+				textResult.setText(preLines + curLine);
+				BracketLeft.setStyle("-fx-background-color: #A0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+
+				break;
+			case DIGIT0:
+				curLine+=")";
+				textResult.setText(preLines + curLine);
+				BracketRight.setStyle("-fx-background-color: #A0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			}
+		}
+		
+		else {
+			KeyCode code=event.getCode();
+			switch(code) {
+			
+			case DIGIT0:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="0";
+				textResult.setText(preLines + curLine);
+				Num0.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT1:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="1";
+				textResult.setText(preLines + curLine);
+				Num1.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT2:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="2";
+				textResult.setText(preLines + curLine);
+				Num2.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT3:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="3";
+				textResult.setText(preLines + curLine);
+				Num3.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT4:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="4";
+				textResult.setText(preLines + curLine);
+				Num4.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT5:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="5";
+				textResult.setText(preLines + curLine);
+				Num5.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT6:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="6";
+				textResult.setText(preLines + curLine);
+				Num6.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT7:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="7";
+				textResult.setText(preLines + curLine);
+				Num7.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT8:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="8";
+				textResult.setText(preLines + curLine);
+				Num8.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT9:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine+="9";
+				textResult.setText(preLines + curLine);
+				Num9.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case Q:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine += "!";
+				textResult.setText(preLines + curLine);
+				Factorial.setStyle("-fx-background-color: #A0A0A0; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case A:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine += "√";
+				textResult.setText(preLines + curLine);
+				Root.setStyle("-fx-background-color: #A0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case Z:
+				if (curLine.equals("0")) {
+					curLine = "";
+				}
+				curLine += "^";
+				textResult.setText(preLines + curLine);
+				Square.setStyle("-fx-background-color: #A0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case W:
+				if (trim(curLine, '0').length() == 0)
+					return;
+				int lastNum = curLine.length() - 1;
+				while (lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))) {
+					lastNum--;
+				}
+				StringBuilder cl = new StringBuilder(curLine);
+				if (lastNum >= 0 && cl.charAt(lastNum) == '-' && !Character.isDigit(cl.charAt(lastNum - 1))) {
+					cl.deleteCharAt(lastNum);
+				} else {
+					cl.insert(lastNum + 1, '-');
+				}
+				curLine = new String(cl);
+				textResult.setText(preLines + curLine);
+				Negative.setStyle("-fx-background-color: #A0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case E:
+				curLine = "0";
+				textResult.setText(preLines + curLine);
+				ClearError.setStyle("-fx-background-color: #A0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case R:
+				preLines = "";
+				curLine = "0";
+				textResult.setText(preLines + curLine);
+				Clear.setStyle("-fx-background-color: #D9D9D9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case BACK_SPACE:
+				curLine = curLine.substring(0, curLine.length() - 1);
+				if (curLine.length() == 0) {
+					curLine = "0";
+				}
+				textResult.setText(preLines + curLine);
+				Backspace.setStyle("-fx-background-color: #A0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;			
+			case SLASH:
+				curLine+="/";
+				textResult.setText(preLines + curLine);
+				Divide.setStyle("-fx-background-color: #F0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case MINUS:
+				curLine+="-";
+				textResult.setText(preLines + curLine);
+				Minus.setStyle("-fx-background-color: #F0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case PERIOD:
+				curLine+=".";
+				textResult.setText(preLines + curLine);
+				Dot.setStyle("-fx-background-color: #A0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case EQUALS:
+				Equal.setStyle("-fx-background-color: #F0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				evaluate result = new evaluate();
+				String re= result.evaluateExp(curLine);
+				
+				if(!re.equals("Error")) {
+					preLines += curLine + "\n";
+					curLine = re;
+					textResult.setText(preLines + curLine);// 运算结果
+				}
+				else {
+					preLines += curLine + "\n";
+					curLine = "0";
+					textResult.setText(preLines + "Error");
+				}
+				scrollToBottom();
+				result.printTree();
+				break;
+			}
 		}
 		
 	}
 	
 	public void release(KeyEvent event) {
-		KeyCode code=event.getCode();
+		if(event.isShiftDown()) {
+			KeyCode code=event.getCode();
+			switch(code) {
+			case EQUALS:
+				Plus.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT8:
+				Multiply.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT9:
+				BracketLeft.setStyle("-fx-background-color: #808080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			case DIGIT0:
+				BracketRight.setStyle("-fx-background-color: #808080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				break;
+			}
+		}
+		
+		KeyCode code=event.getCode();		
 		switch(code) {
-		case NUMPAD0:
-			Num0.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT0:
+			Num0.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD1:
-			Num1.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT1:
+			Num1.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD2:
-			Num2.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT2:
+			Num2.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD3:
-			Num3.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT3:
+			Num3.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD4:
-			Num4.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT4:
+			Num4.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD5:
-			Num5.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT5:
+			Num5.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD6:
-			Num6.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT6:
+			Num6.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD7:
-			Num7.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT7:
+			Num7.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD8:
-			Num8.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT8:
+			Num8.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
-		case NUMPAD9:
-			Num9.setStyle("-fx-background-color: #A9A9A9;"); 
+		case DIGIT9:
+			Num9.setStyle("-fx-background-color: #A9A9A9;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case Q:
+			Factorial.setStyle("-fx-background-color: #808080; -fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case A:
+			Root.setStyle("-fx-background-color: #808080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case Z:
+			Square.setStyle("-fx-background-color: #808080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case W:
+			Negative.setStyle("-fx-background-color: #808080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case E:
+			ClearError.setStyle("-fx-background-color: #808080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case R:
+			Clear.setStyle("-fx-background-color: #808080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case BACK_SPACE:
+			Backspace.setStyle("-fx-background-color: #808080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;			
+		case SLASH:
+			Divide.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case MINUS:
+			Minus.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case PERIOD:
+			Dot.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case EQUALS:
+			Equal.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
 		}
 	}
