@@ -369,6 +369,12 @@ public class evaluate {
 
 			// 当栈中不是空的时候继续运算
 			while (!operatorStack.isEmpty()) {
+				if(operandStack.size()<2) {
+					System.err.println("缺少操作数！");
+					confirm = false;
+					return "Error";
+				}
+				
 				processAnOperator(operandStack, operatorStack);
 			}
 			

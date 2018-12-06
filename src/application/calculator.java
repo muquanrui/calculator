@@ -216,13 +216,13 @@ public class calculator implements Initializable {
 
 	@FXML
 	public void toNegative(ActionEvent event) {
-		if (trim(curLine, '0').length() == 0)
+		if (Double.parseDouble(curLine)==0)
 			return;
 		int lastNum = curLine.length() - 1;
 		while (lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))) {
 			lastNum--;
 		}
-		if(curLine.charAt(lastNum) == '.') {
+		if(lastNum>-1&&curLine.charAt(lastNum) == '.') {
 			lastNum--;
 			while (lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))) {
 				lastNum--;
@@ -505,6 +505,8 @@ public class calculator implements Initializable {
 					preLines += curLine + "\n";
 					curLine = re;
 					textResult.setText(preLines + curLine);// 运算结果
+					CanvasTree ct = new CanvasTree(result.getTree());
+					ct.draw();
 				}
 				else {
 					preLines += curLine + "\n";
@@ -513,6 +515,25 @@ public class calculator implements Initializable {
 				}
 				scrollToBottom();
 				result.printTree();
+				break;
+			case ENTER :
+				Equal.setStyle("-fx-background-color: #F0A0A0;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+				evaluate resulta = new evaluate();
+				String rea= resulta.evaluateExp(curLine);
+				if(!rea.equals("Error")) {
+					preLines += curLine + "\n";
+					curLine = rea;
+					textResult.setText(preLines + curLine);// 运算结果
+					CanvasTree ct = new CanvasTree(resulta.getTree());
+					ct.draw();
+				}
+				else {
+					preLines += curLine + "\n";
+					curLine = "0";
+					textResult.setText(preLines + "Error");
+				}
+				scrollToBottom();
+				resulta.printTree();
 				break;
 			}
 		}
@@ -601,6 +622,9 @@ public class calculator implements Initializable {
 			Dot.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
 		case EQUALS:
+			Equal.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
+			break;
+		case ENTER:
 			Equal.setStyle("-fx-background-color: #F08080;-fx-border-style: solid; -fx-border-color: #696969; -fx-border-width: 1px;"); 
 			break;
 		}
