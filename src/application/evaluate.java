@@ -504,12 +504,14 @@ public class evaluate {
 	}
 	
 	private void scanTree(CNode cn, int depth) {
-		System.out.println("第" + depth + "层节点：" + cn.getText());
 		if(!cn.isLeaf()) {
 			scanTree(cn.lChild, depth + 1);
+			System.out.println("第" + depth + "层节点：" + cn.getText());
 			if(!cn.isSingle) {
 				scanTree(cn.rChild, depth + 1);
 			}
+		}else {
+			System.out.println("第" + depth + "层节点：" + cn.getText());
 		}
 	}
 }
