@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,8 +14,14 @@ import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -25,6 +30,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * 可能出现的错误： 1.输入非法字符 2.括号不闭合 3.连续的操作符 4.
@@ -209,8 +222,14 @@ public class calculator implements Initializable {
 		while (lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))) {
 			lastNum--;
 		}
+		if(curLine.charAt(lastNum) == '.') {
+			lastNum--;
+			while (lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))) {
+				lastNum--;
+			}
+		}
 		StringBuilder cl = new StringBuilder(curLine);
-		if (lastNum >= 0 && cl.charAt(lastNum) == '-' && !Character.isDigit(cl.charAt(lastNum - 1))) {
+		if (lastNum >= 0 && cl.charAt(lastNum) == '-' && (lastNum == 0 || !Character.isDigit(cl.charAt(lastNum - 1)))) {
 			cl.deleteCharAt(lastNum);
 		} else {
 			cl.insert(lastNum + 1, '-');
@@ -260,6 +279,7 @@ public class calculator implements Initializable {
 			preLines += curLine + "\n";
 			curLine = re;
 			textResult.setText(preLines + curLine);// 运算结果
+			draw(result.getTree().getRoot());
 		}
 		else {
 			preLines += curLine + "\n";
@@ -270,6 +290,150 @@ public class calculator implements Initializable {
 		result.printTree();
 	}
 	
+	public void draw(CNode root) {
+		try {
+            Stage st = new Stage();
+            Pane pn = new Pane();
+    		CanvasNode rootNode = new CanvasNode(root.getText());
+    		double width = getWidth(rootNode, root, 40) + 80;
+    		double height = getHeight(rootNode, root, 1);
+    		pn.setPrefWidth(width);
+    		pn.setPrefHeight(height);
+    		rootNode.addIntoPane(pn);
+            st.setTitle("画布");
+            st.setScene(new Scene(pn, width, height));
+            st.setResizable(false);
+            st.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private double getWidth(CanvasNode cvNode, CNode node, double start) {
+		double lWidth = 0.0, rWidth = 0.0;
+		if(node.lChild != null) {
+			CanvasNode lNode = new CanvasNode(node.lChild.getText());
+			cvNode.setLeftNode(lNode);
+			lWidth = getWidth(lNode, node.lChild, start);
+		}
+		if(node.rChild != null) {
+			CanvasNode rNode = new CanvasNode(node.rChild.getText());
+			cvNode.setRightNode(rNode);
+			rWidth = getWidth(rNode, node.rChild, start + lWidth);
+		}
+		double width = lWidth + rWidth >= 100 ? lWidth + rWidth : 100;
+		double x = 0.0;
+		if(node.isLeaf()) x = start + 50;
+		else {
+			x += cvNode.getLeftNode().getX() / 2;
+			if(node.rChild != null) {
+				x += cvNode.getRightNode().getX() / 2;
+			}else {
+				x += cvNode.getLeftNode().getX() / 2;
+			}
+		}
+		cvNode.setX(x);
+		return width;
+	}
+	
+	private double getHeight(CanvasNode cvNode, CNode node, int depth) {
+		double lHeight = 0.0, rHeight = 0.0;
+		if(node.lChild != null) {
+			lHeight = getHeight(cvNode.getLeftNode(), node.lChild, depth + 1);
+		}else {
+			lHeight = depth * 100;
+		}
+		if(node.rChild != null) {
+			rHeight = getHeight(cvNode.getRightNode(), node.rChild, depth + 1);
+		}else {
+			rHeight = depth * 100;
+		}
+		double height = lHeight >= rHeight ? lHeight : rHeight;
+		cvNode.setY(depth * 100 - 50);
+		return height;
+	}
+	
+	private class CanvasNode{
+		private Circle cr;
+		private Text tx;
+		private Line lLine;
+		private Line rLine;
+		private CanvasNode lNode;
+		private CanvasNode rNode;
+		
+		public CanvasNode(String txt) {
+			cr = new Circle(40);
+			cr.setFill(Color.LIGHTBLUE);
+			tx = new Text(txt);
+			tx.setFill(Color.RED);
+			tx.setFont(Font.font(20));
+			lLine = null;
+			rLine = null;
+		}
+		
+		public void setLeftNode(CanvasNode left) {
+			lNode = left;
+		}
+		
+		public void setRightNode(CanvasNode right) {
+			if(right != null) {
+				rNode = right;
+			}
+		}
+		
+		public CanvasNode getLeftNode() {
+			return lNode;
+		}
+		
+		public CanvasNode getRightNode() {
+			return rNode;
+		}
+		
+		public void setX(double x) {
+			cr.setCenterX(x);
+			tx.setX(x - tx.getLayoutBounds().getWidth() / 2);
+		}
+		
+		public void setY(double y) {
+			cr.setCenterY(y);
+			tx.setY(y + tx.getLayoutBounds().getHeight() / 4);
+		}
+		
+		public double getX() {
+			return cr.getCenterX();
+		}
+		
+		public double getY() {
+			return cr.getCenterY();
+		}
+		
+		public String getText() {
+			return tx.getText();
+		}
+		
+		public void addIntoPane(Pane pn) {
+			if(lNode != null) {
+				System.out.println(tx.getText() + " - left : " + lNode.getText());
+				lLine = new Line(getX(), getY(), lNode.getX(), lNode.getY());
+				lLine.setStroke(Color.LIGHTSALMON);
+				lLine.setStrokeWidth(3);
+				pn.getChildren().add(lLine);
+				lNode.addIntoPane(pn);
+			}
+			if(rNode != null) {
+				System.out.println(tx.getText() + " - right : " + rNode.getText());
+				rLine = new Line(getX(), getY(), rNode.getX(), rNode.getY());
+				rLine.setStroke(Color.LIGHTSALMON);
+				rLine.setStrokeWidth(3);
+				pn.getChildren().add(rLine);
+				rNode.addIntoPane(pn);
+			}
+			pn.getChildren().add(cr);
+			pn.getChildren().add(tx);
+		}
+		
+	}
+
 	public String trim(String source, char trimChar) {
 		int tail = source.length() - 1;
 
@@ -425,8 +589,14 @@ public class calculator implements Initializable {
 				while (lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))) {
 					lastNum--;
 				}
+				if(curLine.charAt(lastNum) == '.') {
+					lastNum--;
+					while (lastNum >= 0 && Character.isDigit(curLine.charAt(lastNum))) {
+						lastNum--;
+					}
+				}
 				StringBuilder cl = new StringBuilder(curLine);
-				if (lastNum >= 0 && cl.charAt(lastNum) == '-' && !Character.isDigit(cl.charAt(lastNum - 1))) {
+				if (lastNum >= 0 && cl.charAt(lastNum) == '-' && (lastNum == 0 || !Character.isDigit(cl.charAt(lastNum - 1)))) {
 					cl.deleteCharAt(lastNum);
 				} else {
 					cl.insert(lastNum + 1, '-');

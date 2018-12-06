@@ -32,7 +32,7 @@ public class evaluate {
 				while (front > 0 && s.charAt(front) == ' ') {
 					front--;
 				}
-				if (front >= 0 && (s.charAt(front) == ')' || (s.charAt(front) >= '0' && s.charAt(front) <= '9'))) {
+				if (front >= 0 && (s.charAt(front) == ')' || s.charAt(front) == '!' || s.charAt(front) == '^' || s.charAt(front) == '¡Ì' || (s.charAt(front) >= '0' && s.charAt(front) <= '9'))) {
 					result += " " + s.charAt(i) + " ";
 				} else {
 					result += s.charAt(i);
@@ -489,6 +489,10 @@ public class evaluate {
 		}
 
 		return source;
+	}
+	
+	public CTree getTree() {
+		return ct;
 	}
 	
 	public void printTree() {
