@@ -88,13 +88,13 @@ public class evaluate {
 					brackets.push(token.charAt(0));
 					if (i > 0 && Pattern.matches(numPattern, tokens.get(i - 1))) {
 						confirm = false;
-						System.err.println("错误!\t位置：" + con + " \t原因：左括号前不能直接加操作数");
+						System.out.println("错误!\t位置：" + con + " \t原因：左括号前不能直接加操作数");
 					}
 				} else if (token.equals(")")) {
 
 					if (i < tokens.size() - 1 && Pattern.matches(numPattern, tokens.get(i + 1))) {
 						confirm = false;
-						System.err.println("错误!\t位置：" + (newLine.indexOf(token) + 1) + "\t原因：右括号后不能直接加操作数");
+						System.out.println("错误!\t位置：" + (newLine.indexOf(token) + 1) + "\t原因：右括号后不能直接加操作数");
 						newLine.replaceFirst("\\(", "@");
 					}
 
@@ -103,7 +103,7 @@ public class evaluate {
 					} catch (Exception e) {
 						confirm = false;
 
-						System.err.println("错误!\t位置：" + newLine.indexOf(token) + "\t原因：输入括号未闭合");
+						System.out.println("错误!\t位置：" + newLine.indexOf(token) + "\t原因：右括号未闭合");
 
 						if (orand.indexOf("(") != -1) {
 							orand.remove(orand.lastIndexOf("("));
@@ -115,18 +115,18 @@ public class evaluate {
 				} else if (token.equals("!")) {
 					if (i < tokens.size() - 1 && Pattern.matches(numPattern, tokens.get(i + 1))) {
 						confirm = false;
-						System.err.println("错误!\t位置：" + (newLine.indexOf(token) + 1) + "\t原因：阶乘符号后不能直接加操作数");
+						System.out.println("错误!\t位置：" + (newLine.indexOf(token) + 1) + "\t原因：阶乘符号后不能直接加操作数");
 					}
 				} else if (token.equals("^")) {
 					if (i < tokens.size() - 1 && Pattern.matches(numPattern, tokens.get(i + 1))) {
 						confirm = false;
-						System.err.println("错误!\t位置：" + (newLine.indexOf(token) + 1) + "\t原因：平方符号不能直接加操作数");
+						System.out.println("错误!\t位置：" + (newLine.indexOf(token) + 1) + "\t原因：平方符号不能直接加操作数");
 					}
 
 				} else if (token.equals("√")) {
 					if (i < tokens.size() - 1 && Pattern.matches(numPattern, tokens.get(i + 1))) {
 						confirm = false;
-						System.err.println("错误!\t位置：" + (newLine.indexOf(token) + 1) + "\t原因：开方符号后不能直接加操作数");
+						System.out.println("错误!\t位置：" + (newLine.indexOf(token) + 1) + "\t原因：开方符号后不能直接加操作数");
 					}
 				} else {
 					orandS.push(token);
@@ -134,7 +134,7 @@ public class evaluate {
 						oratorS.pop();
 					} catch (Exception e) {
 						confirm = false;
-						System.err.println("错误!\t位置：" + newLine.indexOf(token) + "\t原因：操作符使用错误");
+						System.out.println("错误!\t位置：" + newLine.indexOf(token) + "\t原因：操作符使用错误");
 						orand.remove(orand.lastIndexOf(token));
 						tokens.remove(i);
 						i--;
@@ -170,7 +170,7 @@ public class evaluate {
 					break;
 				}
 				confirm = false;
-				System.err.println("错误!\t位置：" + (newLine.indexOf(token) + pos) + "\t原因：输入包含无效字符");
+				System.out.println("错误!\t位置：" + (newLine.indexOf(token) + pos) + "\t原因：输入包含无效字符");
 
 				char b[] = new char[token.length()];
 				Arrays.fill(b, 'c');
@@ -181,7 +181,7 @@ public class evaluate {
 		}
 
 		while (!brackets.isEmpty()) {
-			System.err.println("错误!\t位置：" + newLine.indexOf("(") + "\t原因：括号未闭合");
+			System.out.println("错误!\t位置：" + newLine.indexOf("(") + "\t原因：左括号未闭合");
 			confirm = false;
 			newLine = newLine.replaceFirst("\\(", "#");
 			orand.remove(orand.lastIndexOf("("));
@@ -235,7 +235,7 @@ public class evaluate {
 				else if (token.charAt(0) == '!') {
 					if(operandStack.isEmpty()) {
 						confirm = false;
-						System.err.println("阶乘符号使用错误!");
+						System.out.println("阶乘符号使用错误!");
 						return "Error";
 					}
 					double cur = operandStack.pop();
@@ -243,7 +243,7 @@ public class evaluate {
 					double now = 1;
 					if(cur<=0) {
 						confirm = false;
-						System.err.println("不能计算负数阶乘!");
+						System.out.println("不能计算负数或0的阶乘!");
 						return "Error";
 					}
 					else {
@@ -252,7 +252,7 @@ public class evaluate {
 								now *= i;
 							} else {
 								confirm = false;
-								System.err.println("溢出!");
+								System.out.println("溢出!");
 								return "Error";
 							}
 
@@ -272,7 +272,7 @@ public class evaluate {
 				else if (token.charAt(0) == '^') {
 					if(operandStack.isEmpty()) {
 						confirm = false;
-						System.err.println("平方符号使用错误!");
+						System.out.println("平方符号使用错误!");
 						return "Error";
 					}
 					double cur = operandStack.pop();
@@ -283,7 +283,7 @@ public class evaluate {
 							operandStack.push(-(cur * cur));
 						} else {
 							confirm = false;
-							System.err.println("溢出!");
+							System.out.println("溢出!");
 							return "Error";
 						}
 					} else {
@@ -292,7 +292,7 @@ public class evaluate {
 							operandStack.push(cur * cur);
 						} else {
 							confirm = false;
-							System.err.println("溢出!");
+							System.out.println("溢出!");
 							return "Error";
 						}
 					}
@@ -309,7 +309,7 @@ public class evaluate {
 				else if (token.charAt(0) == '√') {
 					if(operandStack.isEmpty()) {
 						confirm = false;
-						System.err.println("开方符号使用错误!");
+						System.out.println("开方符号使用错误!");
 						return "Error";
 					}
 					double cur = operandStack.pop();
@@ -370,7 +370,7 @@ public class evaluate {
 			// 当栈中不是空的时候继续运算
 			while (!operatorStack.isEmpty()) {
 				if(operandStack.size()<2) {
-					System.err.println("缺少操作数！");
+					System.out.println("缺少操作数！");
 					confirm = false;
 					return "Error";
 				}
@@ -410,7 +410,7 @@ public class evaluate {
 			operandStack.push(op2 / op1);
 		else {
 			confirm = false;
-			System.err.println("溢出!");
+			System.out.println("溢出!");
 		}
 
 		CBNode cb = bnodeStack.pop();

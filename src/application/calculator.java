@@ -156,7 +156,25 @@ public class calculator implements Initializable {
 			curLine = textAll.substring(currentLine, textAll.length());
 		}
 
-		//doTests();
+		doTests();
+	}
+	
+	private void doTests() {
+		try {
+	        InputStreamReader isr = new InputStreamReader(new FileInputStream("test.txt"), "GBK");
+	        BufferedReader br = new BufferedReader(isr);
+	        String line = "";
+            while ((line = br.readLine()) != null) {
+            	if(line.length() == 0 || line.charAt(0) == '/') continue;
+            	curLine = line;
+    			evaluateExpression(curLine);
+    			System.out.println("------------------");
+            }
+            br.close();
+            isr.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 	}
 	
 	@FXML
@@ -272,23 +290,27 @@ public class calculator implements Initializable {
 	}
 	
 	public void evaluateExp(ActionEvent event) {
+		evaluateExpression(curLine);
+	}
+	
+	public void evaluateExpression(String exp) {
 		evaluate result = new evaluate();
-		String re= result.evaluateExp(curLine);
+		String re= result.evaluateExp(exp);
 		
 		if(!re.equals("Error")) {
 			preLines += curLine + "\n";
 			curLine = re;
 			textResult.setText(preLines + curLine);// 运算结果
-			CanvasTree ct = new CanvasTree(result.getTree());
-			ct.draw();
+//			CanvasTree ct = new CanvasTree(result.getTree());
+//			ct.draw();
 		}
 		else {
 			preLines += curLine + "\n";
 			curLine = "0";
 			textResult.setText(preLines + "Error");
 		}
-		scrollToBottom();
-		result.printTree();
+//		scrollToBottom();
+//		result.printTree();
 	}
 
 	public String trim(String source, char trimChar) {
